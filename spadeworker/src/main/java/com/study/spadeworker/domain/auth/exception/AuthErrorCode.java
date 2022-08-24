@@ -24,6 +24,7 @@ public enum AuthErrorCode implements ErrorCode {
     EXPIRED_TOKEN(401, "A102", "만료된 토큰 입니다."),
     NOT_EXPIRED_TOKEN(401, "A103", "만료되지 않은 토큰 입니다."),
     INVALID_REFRESH_TOKEN(400, "A104", "잘못된 refresh token 입니다."),
+    NO_TOKEN(400, "A105", "요청에 토큰이 존재하지 않습니다."),
 
     /**
      * OAuth

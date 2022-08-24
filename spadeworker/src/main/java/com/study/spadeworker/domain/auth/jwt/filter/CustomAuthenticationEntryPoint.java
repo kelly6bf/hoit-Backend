@@ -11,6 +11,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+import static com.study.spadeworker.domain.auth.exception.AuthErrorCode.*;
+
 /**
  * Servlet Filter 에서 발생한 예외 처리
  */
@@ -24,12 +26,14 @@ public class CustomAuthenticationEntryPoint implements AuthenticationEntryPoint 
     ) throws IOException, ServletException {
         String exception = (String) request.getAttribute("exception");
 
-        if (exception.equals(AuthErrorCode.EXPIRED_TOKEN.getCode())) {
-            setResponse(response, AuthErrorCode.EXPIRED_TOKEN);
-        } else if (exception.equals(AuthErrorCode.INVALID_TOKEN.getCode())) {
-            setResponse(response, AuthErrorCode.INVALID_TOKEN);
-        } else if (exception.equals(AuthErrorCode.AUTHENTICATION_CLIENT_EXCEPTION.getCode())) {
-            setResponse(response, AuthErrorCode.AUTHENTICATION_CLIENT_EXCEPTION);
+        if (exception.equals(NO_TOKEN.getCode())) {
+            setResponse(response, NO_TOKEN);
+        } else if (exception.equals(EXPIRED_TOKEN.getCode())) {
+            setResponse(response, EXPIRED_TOKEN);
+        } else if (exception.equals(INVALID_TOKEN.getCode())) {
+            setResponse(response, INVALID_TOKEN);
+        } else if (exception.equals(AUTHENTICATION_CLIENT_EXCEPTION.getCode())) {
+            setResponse(response, AUTHENTICATION_CLIENT_EXCEPTION);
         }
     }
 

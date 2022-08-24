@@ -19,6 +19,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+import static com.study.spadeworker.domain.auth.exception.AuthErrorCode.*;
+
 /**
  * 사용자 인증 시 Token 을 검증하는 Servlet Filter
  */
@@ -34,6 +36,12 @@ public class TokenAuthenticationFilter extends OncePerRequestFilter {
             FilterChain filterChain) throws ServletException, IOException {
 
         String tokenStr = HeaderUtil.getAccessToken(request);
+        if (tokenStr == null) {
+            request.setAttribute("exception", NO_TOKEN.getCode());
+            filterChain.doFilter(request, response);
+            return;
+        }
+
         AuthToken token = tokenProvider.convertAuthToken(tokenStr);
 
         // token 을 재발급 하는 경우
@@ -49,11 +57,11 @@ public class TokenAuthenticationFilter extends OncePerRequestFilter {
                 SecurityContextHolder.getContext().setAuthentication(authentication);
             }
         } catch (ExpiredJwtException e) {
-            request.setAttribute("exception", AuthErrorCode.EXPIRED_TOKEN.getCode());
+            request.setAttribute("exception", EXPIRED_TOKEN.getCode());
         } catch (JwtException e) {
-            request.setAttribute("exception", AuthErrorCode.INVALID_TOKEN.getCode());
+            request.setAttribute("exception", INVALID_TOKEN.getCode());
         } catch (TokenValidFailedException e) {
-            request.setAttribute("exception", AuthErrorCode.AUTHENTICATION_CLIENT_EXCEPTION.getCode());
+            request.setAttribute("exception", AUTHENTICATION_CLIENT_EXCEPTION.getCode());
         }
 
         filterChain.doFilter(request, response);
