@@ -15,7 +15,7 @@ public class UserRefreshToken extends BaseTimeEntity {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(length = 64, unique = true)
+    @Column(length = 200, unique = true)
     private String userId;
 
     @Column(length = 256)

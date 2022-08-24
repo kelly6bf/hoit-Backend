@@ -31,11 +31,11 @@ public class User extends BaseTimeEntity {
     @Column(nullable = false, length = 512)
     private String profileImgUrl;
 
+    @Column(nullable = false, length = 200)
+    private String email;
+
     @Column(length = 1000)
     private String description;
-
-    @Column(length = 200)
-    private String email;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false, length = 30)
