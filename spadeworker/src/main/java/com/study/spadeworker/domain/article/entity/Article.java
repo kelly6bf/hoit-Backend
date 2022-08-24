@@ -1,6 +1,6 @@
 package com.study.spadeworker.domain.article.entity;
 
-import com.study.spadeworker.domain.user.entity.UserAccount;
+import com.study.spadeworker.domain.user.entity.User;
 import com.study.spadeworker.global.config.audit.BaseEntity;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -37,9 +37,9 @@ public class Article extends BaseEntity {
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "user_id")
-    private UserAccount user;
+    private User user;
 
-    private Article(String title, String content, UserAccount user) {
+    private Article(String title, String content, User user) {
         this.title = title;
         this.content = content;
         this.likesCount = 0;
@@ -47,7 +47,7 @@ public class Article extends BaseEntity {
         this.user = user;
     }
 
-    public static Article of(String title, String content, UserAccount user) {
+    public static Article of(String title, String content, User user) {
         return new Article(title, content, user);
     }
 
