@@ -3,6 +3,7 @@ package com.study.spadeworker.domain.article.entity;
 import com.study.spadeworker.domain.user.entity.User;
 import com.study.spadeworker.global.config.audit.BaseEntity;
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -39,7 +40,8 @@ public class Article extends BaseEntity {
     @JoinColumn(name = "user_id")
     private User user;
 
-    private Article(String title, String content, User user) {
+    @Builder
+    public Article(String title, String content, User user) {
         this.title = title;
         this.content = content;
         this.likesCount = 0;
@@ -47,8 +49,12 @@ public class Article extends BaseEntity {
         this.user = user;
     }
 
-    public static Article of(String title, String content, User user) {
-        return new Article(title, content, user);
+    /**
+     * 게시물 수정
+     */
+    public void update(String title, String content) {
+        this.title = title;
+        this.content = content;
     }
 
     @Override

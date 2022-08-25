@@ -13,9 +13,6 @@ public class AuditConfig {
     @Bean
     public AuditorAware<String> auditorProvider() {
 
-        return () -> Optional.of("tester");
-
-        // 인증 기능 적용시 활성화
-//        return new AuditorAwareImpl();
+        return new AuditorAwareImpl();
     }
 }
