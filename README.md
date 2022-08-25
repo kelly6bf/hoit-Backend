@@ -15,11 +15,12 @@
 
 Spring Boot
 
-* Spring Web
 * Spring Boot Actuator
+* Spring Web
 * Spring Data JPA
 * Spring Security
 * OAuth2-Client
+* JUnit5
 * Validation
 * Lombok
 * H2 Database
