@@ -1,0 +1,83 @@
+spring:
+  profiles.active: local
+  datasource:
+    driver-class-name: ${spring.datasource.driver-class-name}
+    url: ${spring.datasource.url}
+    username: ${spring.datasource.username}
+    password: ${spring.datasource.password}
+  jpa:
+    hibernate:
+      ddl-auto: none
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+  # OAuth Config
+  security:
+    oauth2.client:
+      registration:
+        google:
+          clientId: ${google.clientId}
+          clientSecret: ${google.clientSecret}
+          scope:
+            - email
+            - profile
+        naver:
+          clientId: ${naver.clientId}
+          clientSecret: ${naver.clientSecret}
+          clientAuthenticationMethod: post
+          authorizationGrantType: authorization_code
+          redirectUri: "{baseUrl}/{action}/oauth2/code/{registrationId}"
+          scope:
+            - nickname
+            - email
+            - profile_image
+          clientName: Naver
+        kakao:
+          clientId: ${kakao.clientId}
+          clientSecret: ${kakao.clientSecret}
+          clientAuthenticationMethod: post
+          authorizationGrantType: authorization_code
+          redirectUri: "{baseUrl}/{action}/oauth2/code/{registrationId}"
+          scope:
+            - profile_nickname
+            - profile_image
+            - account_email
+          clientName: Kakao
+      # Provider 설정
+      provider:
+        naver:
+          authorizationUri: https://nid.naver.com/oauth2.0/authorize
+          tokenUri: https://nid.naver.com/oauth2.0/token
+          userInfoUri: https://openapi.naver.com/v1/nid/me
+          userNameAttribute: response
+        kakao:
+          authorizationUri: https://kauth.kakao.com/oauth/authorize
+          tokenUri: https://kauth.kakao.com/oauth/token
+          userInfoUri: https://kapi.kakao.com/v2/user/me
+          userNameAttribute: id
+
+# cors 설정
+cors:
+  allowed-origins: ${cors.allowed-origins}
+  allowed-methods: ${cors.allowed-methods}
+  allowed-headers: ${cors.allowed-headers}
+  max-age: ${cors.max-age}
+
+# jwt secret key 설정
+jwt.secret: ${jwt.secret}
+
+# 토큰 관련 secret Key 및 RedirectUri 설정
+app:
+  auth:
+    tokenSecret: ${app.auth.tokenSecret}
+    tokenExpiry: ${app.auth.tokenExpiry}
+    refreshTokenExpiry: ${app.auth.refreshTokenExpiry}
+  oauth2:
+    authorizedRedirectUris: ${app.oauth2.authorizedRedirectUris}
+
+# p6Spy config
+decorator:
+  datasource:
+    p6spy:
+      enable-logging: true
