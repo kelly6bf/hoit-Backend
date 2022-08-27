@@ -45,7 +45,7 @@ public class TokenAuthenticationFilter extends OncePerRequestFilter {
 
         // token 을 재발급 하는 경우
         String path = request.getRequestURI();
-        if ("/auth/refresh".equals(path)) {
+        if ("api/v1/auth/refresh".equals(path)) {
             filterChain.doFilter(request, response);
             return;
         }
