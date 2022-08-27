@@ -1,9 +1,8 @@
 package com.study.spadeworker.domain.auth.jwt.filter;
 
-import com.study.spadeworker.domain.auth.exception.AuthErrorCode;
 import com.study.spadeworker.domain.auth.exception.jwt.TokenValidFailedException;
-import com.study.spadeworker.domain.auth.jwt.AuthToken;
-import com.study.spadeworker.domain.auth.jwt.AuthTokenProvider;
+import com.study.spadeworker.domain.auth.jwt.token.AuthToken;
+import com.study.spadeworker.domain.auth.jwt.token.AuthTokenProvider;
 import com.study.spadeworker.global.util.HeaderUtil;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.JwtException;

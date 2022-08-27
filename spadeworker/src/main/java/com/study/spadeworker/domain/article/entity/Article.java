@@ -21,7 +21,6 @@ public class Article extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "article_id")
     private Long id;
 
     @Column(nullable = false, length = 200)
@@ -37,7 +36,6 @@ public class Article extends BaseEntity {
     private int dislikesCount;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "user_id")
     private User user;
 
     @Builder

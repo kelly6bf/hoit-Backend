@@ -1,4 +1,4 @@
-package com.study.spadeworker.domain.auth.jwt;
+package com.study.spadeworker.domain.auth.jwt.token;
 
 import com.study.spadeworker.domain.auth.exception.jwt.TokenValidFailedException;
 import io.jsonwebtoken.Claims;

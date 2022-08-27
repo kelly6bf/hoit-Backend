@@ -1,6 +1,6 @@
 package com.study.spadeworker.domain.auth.oauth.service;
 
-import com.study.spadeworker.domain.auth.entity.UserPrincipal;
+import com.study.spadeworker.domain.auth.UserPrincipal;
 import com.study.spadeworker.domain.auth.exception.oauth.OAuthProviderMissMatchException;
 import com.study.spadeworker.domain.auth.oauth.info.OAuth2UserInfo;
 import com.study.spadeworker.domain.auth.oauth.info.OAuth2UserInfoFactory;

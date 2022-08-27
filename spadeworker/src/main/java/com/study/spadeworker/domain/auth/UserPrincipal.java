@@ -1,4 +1,4 @@
-package com.study.spadeworker.domain.auth.entity;
+package com.study.spadeworker.domain.auth;
 
 import com.study.spadeworker.domain.user.entity.User;
 import com.study.spadeworker.domain.user.entity.constant.ProviderType;
