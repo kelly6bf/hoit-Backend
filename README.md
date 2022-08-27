@@ -36,5 +36,6 @@ Etc
 ## Reference
 
 * ERD Diagram(Erd-Cloud) : https://www.erdcloud.com/d/GBddmnpZcbfuATjeQ
+* Project Record : https://succulent-bottle-ad0.notion.site/Spadeworker-63ed747caee84abbb1d3ad2c02e30d9b
 
 
