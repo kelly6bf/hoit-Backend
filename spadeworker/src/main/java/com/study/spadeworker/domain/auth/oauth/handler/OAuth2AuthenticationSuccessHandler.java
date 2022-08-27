@@ -1,10 +1,10 @@
 package com.study.spadeworker.domain.auth.oauth.handler;
 
 import com.study.spadeworker.domain.auth.exception.oauth.InvalidLoginRedirectUriException;
-import com.study.spadeworker.domain.auth.jwt.AuthToken;
-import com.study.spadeworker.domain.auth.jwt.AuthTokenProvider;
-import com.study.spadeworker.domain.auth.jwt.UserRefreshToken;
-import com.study.spadeworker.domain.auth.jwt.UserRefreshTokenRepository;
+import com.study.spadeworker.domain.auth.jwt.token.AuthToken;
+import com.study.spadeworker.domain.auth.jwt.token.AuthTokenProvider;
+import com.study.spadeworker.domain.auth.jwt.token.UserRefreshToken;
+import com.study.spadeworker.domain.auth.jwt.token.UserRefreshTokenRepository;
 import com.study.spadeworker.domain.auth.oauth.info.OAuth2UserInfo;
 import com.study.spadeworker.domain.auth.oauth.info.OAuth2UserInfoFactory;
 import com.study.spadeworker.domain.auth.oauth.repository.OAuth2AuthorizationRequestBasedOnCookieRepository;

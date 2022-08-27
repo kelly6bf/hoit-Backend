@@ -1,4 +1,4 @@
-package com.study.spadeworker.domain.auth.jwt;
+package com.study.spadeworker.domain.auth.jwt.token;
 
 import com.study.spadeworker.global.config.audit.BaseTimeEntity;
 import lombok.AccessLevel;

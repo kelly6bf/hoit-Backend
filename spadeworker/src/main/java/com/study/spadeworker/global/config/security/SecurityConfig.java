@@ -1,7 +1,7 @@
 package com.study.spadeworker.global.config.security;
 
-import com.study.spadeworker.domain.auth.jwt.AuthTokenProvider;
-import com.study.spadeworker.domain.auth.jwt.UserRefreshTokenRepository;
+import com.study.spadeworker.domain.auth.jwt.token.AuthTokenProvider;
+import com.study.spadeworker.domain.auth.jwt.token.UserRefreshTokenRepository;
 import com.study.spadeworker.domain.auth.jwt.filter.CustomAccessDeniedHandler;
 import com.study.spadeworker.domain.auth.jwt.filter.CustomAuthenticationEntryPoint;
 import com.study.spadeworker.domain.auth.jwt.filter.TokenAuthenticationFilter;

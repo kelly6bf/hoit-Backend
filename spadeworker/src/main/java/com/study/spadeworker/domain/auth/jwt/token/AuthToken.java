@@ -1,4 +1,4 @@
-package com.study.spadeworker.domain.auth.jwt;
+package com.study.spadeworker.domain.auth.jwt.token;
 
 import io.jsonwebtoken.*;
 import lombok.Getter;
