@@ -1,5 +1,6 @@
 package com.study.spadeworker.domain.article.entity;
 
+import com.study.spadeworker.domain.board.entity.Board;
 import com.study.spadeworker.domain.user.entity.User;
 import com.study.spadeworker.global.config.audit.BaseEntity;
 import lombok.AccessLevel;
@@ -38,13 +39,17 @@ public class Article extends BaseEntity {
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     private User user;
 
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    private Board board;
+
     @Builder
-    public Article(String title, String content, User user) {
+    public Article(String title, String content, User user, Board board) {
         this.title = title;
         this.content = content;
         this.likesCount = 0;
         this.dislikesCount = 0;
         this.user = user;
+        this.board = board;
     }
 
     /**
