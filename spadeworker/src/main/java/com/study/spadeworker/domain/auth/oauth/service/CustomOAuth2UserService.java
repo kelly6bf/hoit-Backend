@@ -13,6 +13,7 @@ import com.study.spadeworker.domain.user.repository.RoleRepository;
 import com.study.spadeworker.domain.user.repository.UserRepository;
 import com.study.spadeworker.domain.user.repository.UserRoleRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.InternalAuthenticationServiceException;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;
@@ -21,11 +22,14 @@ import org.springframework.security.oauth2.core.OAuth2AuthenticationException;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 import static com.study.spadeworker.domain.auth.exception.AuthErrorCode.MISS_MATCH_PROVIDER;
 
 /**
  소셜 로그인 성공 시 후속 조치 담당
  */
+@Slf4j
 @RequiredArgsConstructor
 @Service
 public class CustomOAuth2UserService extends DefaultOAuth2UserService {
@@ -80,13 +84,15 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
         );
         Role role = roleRepository.findByAuthority(RoleType.USER);
 
+        User createdUser = userRepository.saveAndFlush(user);
         userRoleRepository.saveAndFlush(
                 UserRole.builder()
                         .user(user)
                         .role(role)
                         .build()
         );
-        return userRepository.saveAndFlush(user);
+
+        return createdUser;
     }
 
     private User updateUser(User user, OAuth2UserInfo userInfo) {
