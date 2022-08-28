@@ -10,6 +10,7 @@ import java.util.Arrays;
 public enum RoleType {
     ADMIN("ROLE_ADMIN", "관리자 권한"),
     USER("ROLE_USER", "일반 유저 권한"),
+    BOARD_HOST("ROLE_BOARD_HOST", "게시판 호스트 권한"),
     GUEST("GUEST", "게스트 권한");
 
     private final String code;
