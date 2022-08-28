@@ -1,3 +1,3 @@
-insert into role (authority, created_at, modified_at) values ('USER', now(), now());
-insert into role (authority, created_at, modified_at) values ('ADMIN', now(), now());
-insert into role (authority, created_at, modified_at) values ('BOARD_HOST', now(), now());
+insert into role (authority, created_at, modified_at) values ('USER', now(), now()) ON DUPLICATE KEY UPDATE `authority`=VALUES(`authority`);
+insert into role (authority, created_at, modified_at) values ('ADMIN', now(), now()) ON DUPLICATE KEY UPDATE `authority`=VALUES(`authority`);
+insert into role (authority, created_at, modified_at) values ('BOARD_HOST', now(), now()) ON DUPLICATE KEY UPDATE `authority`=VALUES(`authority`);
