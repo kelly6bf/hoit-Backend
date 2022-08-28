@@ -2,6 +2,7 @@ package com.study.spadeworker.domain.user.entity;
 
 import com.study.spadeworker.global.config.audit.BaseTimeEntity;
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -20,4 +21,10 @@ public class UserRole extends BaseTimeEntity {
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     private Role role;
+
+    @Builder
+    public UserRole(User user, Role role) {
+        this.user = user;
+        this.role = role;
+    }
 }

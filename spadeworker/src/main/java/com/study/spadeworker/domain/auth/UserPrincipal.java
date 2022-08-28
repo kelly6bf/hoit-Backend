@@ -29,7 +29,6 @@ public class UserPrincipal implements OAuth2User, UserDetails, OidcUser {   // ì
     private final String password;
     private final String name;
     private final ProviderType providerType;
-    private final RoleType roleType;
     private final UserStatus status;
     private final Collection<GrantedAuthority> authorities;
     private Map<String, Object> attributes;
@@ -95,7 +94,6 @@ public class UserPrincipal implements OAuth2User, UserDetails, OidcUser {   // ì
                 user.getPassword(),
                 user.getName(),
                 user.getProviderType(),
-                RoleType.USER,
                 UserStatus.ACTIVE,
                 Collections.singletonList(new SimpleGrantedAuthority(RoleType.USER.getCode()))
         );

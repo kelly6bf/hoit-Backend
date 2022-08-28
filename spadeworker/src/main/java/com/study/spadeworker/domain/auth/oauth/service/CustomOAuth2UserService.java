@@ -4,10 +4,14 @@ import com.study.spadeworker.domain.auth.UserPrincipal;
 import com.study.spadeworker.domain.auth.exception.oauth.OAuthProviderMissMatchException;
 import com.study.spadeworker.domain.auth.oauth.info.OAuth2UserInfo;
 import com.study.spadeworker.domain.auth.oauth.info.OAuth2UserInfoFactory;
+import com.study.spadeworker.domain.user.entity.Role;
 import com.study.spadeworker.domain.user.entity.User;
+import com.study.spadeworker.domain.user.entity.UserRole;
 import com.study.spadeworker.domain.user.entity.constant.ProviderType;
 import com.study.spadeworker.domain.user.entity.constant.RoleType;
+import com.study.spadeworker.domain.user.repository.RoleRepository;
 import com.study.spadeworker.domain.user.repository.UserRepository;
+import com.study.spadeworker.domain.user.repository.UserRoleRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.InternalAuthenticationServiceException;
 import org.springframework.security.core.AuthenticationException;
@@ -27,6 +31,8 @@ import static com.study.spadeworker.domain.auth.exception.AuthErrorCode.MISS_MAT
 public class CustomOAuth2UserService extends DefaultOAuth2UserService {
 
     private final UserRepository userRepository;
+    private final RoleRepository roleRepository;
+    private final UserRoleRepository userRoleRepository;
 
     @Override
     public OAuth2User loadUser(OAuth2UserRequest userRequest) throws OAuth2AuthenticationException {
@@ -70,10 +76,16 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
                 userInfo.getName(),
                 userInfo.getProfileImgUrl(),
                 userInfo.getEmail(),
-                providerType,
-                RoleType.USER
+                providerType
         );
+        Role role = roleRepository.findByAuthority(RoleType.USER);
 
+        userRoleRepository.saveAndFlush(
+                UserRole.builder()
+                        .user(user)
+                        .role(role)
+                        .build()
+        );
         return userRepository.saveAndFlush(user);
     }
 

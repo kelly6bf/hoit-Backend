@@ -42,13 +42,9 @@ public class User extends BaseTimeEntity {
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false, length = 30)
-    private RoleType role;
-
-    @Enumerated(EnumType.STRING)
-    @Column(nullable = false, length = 30)
     private UserStatus status;
 
-    private User(String loginId, String password, String name, String profileImgUrl, String email, ProviderType providerType, RoleType role) {
+    private User(String loginId, String password, String name, String profileImgUrl, String email, ProviderType providerType) {
         this.loginId = loginId;
         this.password = password != null ? password : "NO_PASSWORD";
         this.name = name;
@@ -56,12 +52,11 @@ public class User extends BaseTimeEntity {
         this.description = null;
         this.email = email != null ? email : "NO_EMAIL";
         this.providerType = providerType;
-        this.role = role;
         this.status = UserStatus.ACTIVE;
     }
 
-    public static User of(String loginId, String password, String name, String profileImgUrl, String email, ProviderType providerType, RoleType role) {
-        return new User(loginId, password, name, profileImgUrl, email, providerType, role);
+    public static User of(String loginId, String password, String name, String profileImgUrl, String email, ProviderType providerType) {
+        return new User(loginId, password, name, profileImgUrl, email, providerType);
     }
 
     public void changeUsername(String name) {
