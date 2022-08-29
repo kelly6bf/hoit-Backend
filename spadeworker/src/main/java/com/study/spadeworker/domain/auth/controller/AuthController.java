@@ -20,7 +20,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @RequiredArgsConstructor
-@RequestMapping("/api/v1/auth")
+@RequestMapping("/api/auth")
 @RestController
 public class AuthController {
 

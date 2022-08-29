@@ -1,4 +1,4 @@
-package com.study.spadeworker.domain.board.entity;
+package com.study.spadeworker.domain.article.entity;
 
 import com.study.spadeworker.global.config.audit.BaseTimeEntity;
 import lombok.AccessLevel;
@@ -10,12 +10,12 @@ import javax.persistence.*;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
-public class BoardCategory extends BaseTimeEntity {
+public class ArticleCategory extends BaseTimeEntity {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(nullable = false, unique = true)
     private String title;
+
 }

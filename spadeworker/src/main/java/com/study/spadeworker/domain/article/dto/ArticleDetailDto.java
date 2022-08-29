@@ -1,6 +1,7 @@
 package com.study.spadeworker.domain.article.dto;
 
 import com.study.spadeworker.domain.article.entity.Article;
+import com.study.spadeworker.domain.article.entity.ArticleCategory;
 import lombok.Getter;
 
 import java.time.LocalDateTime;
@@ -19,6 +20,8 @@ public class ArticleDetailDto {
 
     private String username;
 
+    private String articleCategory;
+
     private LocalDateTime createdAt;
 
     private ArticleDetailDto(Long articleId,
@@ -27,6 +30,7 @@ public class ArticleDetailDto {
                              int likesCount,
                              int dislikesCount,
                              String username,
+                             String articleCategory,
                              LocalDateTime createdAt) {
         this.articleId = articleId;
         this.title = title;
@@ -34,6 +38,7 @@ public class ArticleDetailDto {
         this.likesCount = likesCount;
         this.dislikesCount = dislikesCount;
         this.username = username;
+        this.articleCategory = articleCategory;
         this.createdAt = createdAt;
     }
 
@@ -45,6 +50,7 @@ public class ArticleDetailDto {
                 article.getLikesCount(),
                 article.getDislikesCount(),
                 article.getUser().getName(),
+                article.getArticleCategory().getTitle(),
                 article.getCreatedAt()
         );
     }
