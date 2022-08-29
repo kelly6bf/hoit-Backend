@@ -26,3 +26,22 @@ insert into article_category (title, created_at, modified_at) values ('홍보/�
 insert into article_category (title, created_at, modified_at) values ('공지 사항', now(), now()) ON DUPLICATE KEY UPDATE `title`=VALUES(`title`);
 insert into article_category (title, created_at, modified_at) values ('이벤트', now(), now()) ON DUPLICATE KEY UPDATE `title`=VALUES(`title`);
 
+-- 게시글 댓글 테스트 데이터
+insert into article_comment(content, likes_count, dislikes_count, article_id, user_id, created_at, created_by, modified_at, modified_by)
+    values ('댓글1 입니다!!!', 0, 0, 5, 2, now(), 'tester', now(), 'tester') ON DUPLICATE KEY UPDATE `content`=VALUES(`content`);
+
+insert into article_comment(content, likes_count, dislikes_count, article_id, user_id, created_at, created_by, modified_at, modified_by)
+values ('댓글2 입니다!!!', 0, 0, 5, 2, now(), 'tester', now(), 'tester')
+    ON DUPLICATE KEY UPDATE `content`=VALUES(`content`);
+
+insert into article_comment(content, likes_count, dislikes_count, article_id, user_id, created_at, created_by, modified_at, modified_by)
+values ('댓글3 입니다!!!', 0, 0, 5, 2, now(), 'tester', now(), 'tester')
+    ON DUPLICATE KEY UPDATE `content`=VALUES(`content`);
+
+insert into article_comment(content, likes_count, dislikes_count, article_id, user_id, created_at, created_by, modified_at, modified_by)
+values ('댓글4 입니다!!!', 0, 0, 5, 2, now(), 'tester', now(), 'tester')
+    ON DUPLICATE KEY UPDATE `content`=VALUES(`content`);
+
+insert into article_comment(content, likes_count, dislikes_count, article_id, user_id, created_at, created_by, modified_at, modified_by)
+values ('댓글5 입니다!!!', 0, 0, 5, 2, now(), 'tester', now(), 'tester')
+    ON DUPLICATE KEY UPDATE `content`=VALUES(`content`);
