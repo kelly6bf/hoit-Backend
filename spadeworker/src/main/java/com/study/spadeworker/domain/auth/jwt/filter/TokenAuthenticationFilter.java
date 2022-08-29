@@ -34,6 +34,7 @@ public class TokenAuthenticationFilter extends OncePerRequestFilter {
             HttpServletResponse response,
             FilterChain filterChain) throws ServletException, IOException {
 
+        // 토큰이 없을 경우
         String tokenStr = HeaderUtil.getAccessToken(request);
         if (tokenStr == null) {
             request.setAttribute("exception", NO_TOKEN.getCode());
@@ -45,7 +46,7 @@ public class TokenAuthenticationFilter extends OncePerRequestFilter {
 
         // token 을 재발급 하는 경우
         String path = request.getRequestURI();
-        if ("api/v1/auth/refresh".equals(path)) {
+        if ("/auth/refresh".equals(path)) {
             filterChain.doFilter(request, response);
             return;
         }

@@ -14,6 +14,7 @@ import com.study.spadeworker.global.config.properties.AppProperties;
 import com.study.spadeworker.global.config.properties.CorsProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -77,10 +78,8 @@ public class SecurityConfig {
         // 권한별 요청 설정
         http.authorizeRequests()
                 .requestMatchers(CorsUtils::isPreFlightRequest).permitAll()
-                .antMatchers("/api/v1/auth/refresh").permitAll()
-                .antMatchers("/api/**").hasAnyAuthority(RoleType.USER.getCode())
-                .antMatchers("/api/**/host/**").hasAnyAuthority(RoleType.USER.getCode())
-                .antMatchers("/api/**/admin/**").hasAnyAuthority(RoleType.ADMIN.getCode())
+                .antMatchers(HttpMethod.GET, "/api/article/**").permitAll()
+//                .antMatchers("/api/admin/**").hasAnyAuthority(RoleType.ADMIN.getCode())
                 // 나머지는 모두 인증 필요
                 .anyRequest().authenticated();
 
