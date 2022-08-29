@@ -36,6 +36,7 @@ Etc
 ## Reference
 
 * ERD Diagram(Erd-Cloud) : https://www.erdcloud.com/d/GBddmnpZcbfuATjeQ
+* API List-Up :https://docs.google.com/spreadsheets/d/1dusiRvN7TVB_SFaODrS2Iv1_-9Ns5gtcE1ybz5nLKT4/edit?usp=sharing
 * Project Record : https://succulent-bottle-ad0.notion.site/Spadeworker-63ed747caee84abbb1d3ad2c02e30d9b
 
 
