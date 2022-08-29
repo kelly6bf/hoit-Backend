@@ -20,6 +20,12 @@ public class ArticleComment extends BaseEntity {
     @Column(nullable = false, length = 10000)
     private String content;
 
+    @Column(nullable = false)
+    private int likesCount;
+
+    @Column(nullable = false)
+    private int dislikesCount;
+
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     private Article article;
 
@@ -28,6 +34,8 @@ public class ArticleComment extends BaseEntity {
 
     private ArticleComment(String content, Article article, User user) {
         this.content = content;
+        this.likesCount = 0;
+        this.dislikesCount = 0;
         this.article = article;
         this.user = user;
     }

@@ -1,8 +1,11 @@
 package com.study.spadeworker.domain.article.controller;
 
+import com.study.spadeworker.domain.article.dto.ArticleCommentDto;
 import com.study.spadeworker.domain.article.dto.ArticleDetailDto;
 import com.study.spadeworker.domain.article.dto.CreateArticleDto;
 import com.study.spadeworker.domain.article.dto.UpdateArticleDto;
+import com.study.spadeworker.domain.article.dto.response.ArticleWithCommentsResponse;
+import com.study.spadeworker.domain.article.service.ArticleCommentService;
 import com.study.spadeworker.domain.article.service.ArticleService;
 import com.study.spadeworker.global.response.CommonResult;
 import com.study.spadeworker.global.response.ResponseService;
@@ -13,6 +16,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -21,6 +25,7 @@ import javax.validation.Valid;
 public class ArticleController {
 
     private final ArticleService articleService;
+    private final ArticleCommentService articleCommentService;
     private final ResponseService responseService;
 
     /**
@@ -74,18 +79,22 @@ public class ArticleController {
     }
 
     /**
-     * 게시물 단건 상세조회 API
+     * 게시물 단건 상세 내용 및 댓글 조회 API
      */
     @GetMapping("/article/{articleId}")
-    public SingleResult<ArticleDetailDto> getArticleDetail(
+    public SingleResult<ArticleWithCommentsResponse> getArticleDetail(
             @PathVariable final Long articleId
     ) {
         ArticleDetailDto articleDetail = articleService.getArticleDetail(articleId);
+        List<ArticleCommentDto> articleCommentList = articleCommentService.searchArticleComments(articleId);
 
         return responseService.getSingleResult(
                 HttpStatus.OK.value(),
                 "성공적으로 게시글이 조회되었습니다.",
-                articleDetail
+                ArticleWithCommentsResponse.builder()
+                        .article(articleDetail)
+                        .comments(articleCommentList)
+                        .build()
         );
     }
 }

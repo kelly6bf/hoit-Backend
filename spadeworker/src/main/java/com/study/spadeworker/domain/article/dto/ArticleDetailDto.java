@@ -10,7 +10,7 @@ import java.util.List;
 
 @Getter
 public class ArticleDetailDto {
-    private Long articleId;
+    private Long id;
 
     private String title;
 
@@ -36,7 +36,7 @@ public class ArticleDetailDto {
                              UserAccountDto userAccountDto,
                              List<String> hashtagList
                              ) {
-        this.articleId = articleId;
+        this.id = articleId;
         this.title = title;
         this.content = content;
         this.likesCount = likesCount;
