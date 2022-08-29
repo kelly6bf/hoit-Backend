@@ -40,6 +40,9 @@ public class Article extends BaseEntity {
     private User user;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    private ArticleCategory articleCategory;
+
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
     private Board board;
 
     @Builder
