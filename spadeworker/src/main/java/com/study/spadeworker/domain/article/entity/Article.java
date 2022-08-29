@@ -46,21 +46,23 @@ public class Article extends BaseEntity {
     private Board board;
 
     @Builder
-    public Article(String title, String content, User user, Board board) {
+    public Article(String title, String content, User user, Board board, ArticleCategory articleCategory) {
         this.title = title;
         this.content = content;
         this.likesCount = 0;
         this.dislikesCount = 0;
         this.user = user;
+        this.articleCategory = articleCategory;
         this.board = board;
     }
 
     /**
      * 게시물 수정
      */
-    public void update(String title, String content) {
+    public void update(String title, String content, ArticleCategory category) {
         this.title = title;
         this.content = content;
+        this.articleCategory = category;
     }
 
     @Override

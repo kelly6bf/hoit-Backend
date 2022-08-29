@@ -16,7 +16,7 @@ import javax.validation.Valid;
 
 @Slf4j
 @RequiredArgsConstructor
-@RequestMapping("/api/article")
+@RequestMapping("/api")
 @RestController
 public class ArticleController {
 
@@ -26,10 +26,12 @@ public class ArticleController {
     /**
      * 게시물 생성 API
      */
-    @PostMapping()
+    @PostMapping("/board/{boardId}/article")
     public SingleResult<CreateArticleDto.Response> createArticle(
+            @PathVariable final Long boardId,
             @Valid @RequestBody final CreateArticleDto.Request request
     ) {
+        request.setBoardId(boardId);
         Long createdArticleId = articleService.createArticle(request);
 
         return responseService.getSingleResult(
@@ -42,9 +44,9 @@ public class ArticleController {
     /**
      * 게시물 수정 API
      */
-    @PatchMapping("/{articleId}")
+    @PatchMapping("/article/{articleId}")
     public SingleResult<UpdateArticleDto.Response> updateArticle(
-            @PathVariable Long articleId,
+            @PathVariable final Long articleId,
             @Valid @RequestBody final UpdateArticleDto.Request request
     ) {
         Long updatedArticleId = articleService.updateArticle(articleId, request);
@@ -59,9 +61,9 @@ public class ArticleController {
     /**
      * 게시물 삭제 API
      */
-    @DeleteMapping("/{articleId}")
+    @DeleteMapping("/article/{articleId}")
     public CommonResult deleteArticle(
-            @PathVariable Long articleId
+            @PathVariable final Long articleId
     ) {
         articleService.deleteArticle(articleId);
 
@@ -74,9 +76,9 @@ public class ArticleController {
     /**
      * 게시물 단건 상세조회 API
      */
-    @GetMapping("/{articleId}")
+    @GetMapping("/article/{articleId}")
     public SingleResult<ArticleDetailDto> getArticleDetail(
-            @PathVariable Long articleId
+            @PathVariable final Long articleId
     ) {
         ArticleDetailDto articleDetail = articleService.getArticleDetail(articleId);
 
