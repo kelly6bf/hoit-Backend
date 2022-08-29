@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityNotFoundException;
+import java.util.List;
 
 @RequiredArgsConstructor
 @Transactional
@@ -24,32 +25,40 @@ public class ArticleService {
     private final ArticleCategoryRepository articleCategoryRepository;
     private final UserService userService;
     private final BoardService boardService;
+    private final HashtagService hashtagService;
 
     /**
      * 게시글 생성 비즈니스
      */
     public Long createArticle(CreateArticleDto.Request request) {
-        Article article = Article.builder()
-                .title(request.getTitle())
-                .content(request.getContent())
-                .articleCategory(getArticleCategory(request.getArticleCategory()))
-                .user(userService.getCurrentUser())
-                .board(boardService.getBoardById(request.getBoardId()))
-                .build();
+        Article savedArticle = articleRepository.saveAndFlush(
+                Article.builder()
+                        .title(request.getTitle())
+                        .content(request.getContent())
+                        .articleCategory(getArticleCategory(request.getArticleCategory()))
+                        .user(userService.getCurrentUser())
+                        .board(boardService.getBoardById(request.getBoardId()))
+                        .build()
+        );
+        // 게시글 & 해시태그 연관관계 저장
+        hashtagService.saveArticleHashtag(request.getHashtagList(), savedArticle);
 
-        return articleRepository.save(article).getId();
+        return savedArticle.getId();
     }
 
     /**
      * 게시글 수정 비즈니스
      */
     public Long updateArticle(Long articleId, UpdateArticleDto.Request request) {
-        Article article = getArticleById(articleId);
+        Article article = getArticle(articleId);
         article.update(
                 request.getTitle(),
                 request.getContent(),
                 getArticleCategory(request.getArticleCategory())
                 );
+
+        // 해시태그 변경 적용
+        hashtagService.updateArticleHashtag(request.getHashtagList(), article);
 
         return articleId;
     }
@@ -63,12 +72,13 @@ public class ArticleService {
      * 게시글 삭제 비즈니스
      */
     public void deleteArticle(Long articleId) {
-        Article article = getArticleById(articleId);
+        Article article = getArticle(articleId);
+        hashtagService.deleteArticleHashtag(article);
         articleRepository.delete(article);
     }
 
     // 게시글 조회 메서드
-    private Article getArticleById(Long articleId) {
+    private Article getArticle(Long articleId) {
         return articleRepository.findById(articleId)
                 .orElseThrow(() -> new EntityNotFoundException("게시글이 존재하지 않습니다."));
     }
@@ -78,8 +88,11 @@ public class ArticleService {
      */
     @Transactional(readOnly = true)
     public ArticleDetailDto getArticleDetail(Long articleId) {
-        return articleRepository.findById(articleId)
-                .map(ArticleDetailDto::from)
+        Article article = articleRepository.findById(articleId)
                 .orElseThrow(() -> new EntityNotFoundException("게시글이 존재하지 않습니다."));
+        List<String> articleHashtagList = hashtagService.getArticleHashtagList(article);
+
+        return ArticleDetailDto.from(article, articleHashtagList);
+
     }
 }

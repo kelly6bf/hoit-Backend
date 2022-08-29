@@ -5,6 +5,7 @@ import com.study.spadeworker.domain.article.entity.ArticleCategory;
 import lombok.Getter;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Getter
 public class ArticleDetailDto {
@@ -22,6 +23,8 @@ public class ArticleDetailDto {
 
     private String articleCategory;
 
+    private List<String> hashtagList;
+
     private LocalDateTime createdAt;
 
     private ArticleDetailDto(Long articleId,
@@ -31,6 +34,7 @@ public class ArticleDetailDto {
                              int dislikesCount,
                              String username,
                              String articleCategory,
+                             List<String> hashtagList,
                              LocalDateTime createdAt) {
         this.articleId = articleId;
         this.title = title;
@@ -39,10 +43,11 @@ public class ArticleDetailDto {
         this.dislikesCount = dislikesCount;
         this.username = username;
         this.articleCategory = articleCategory;
+        this.hashtagList = hashtagList;
         this.createdAt = createdAt;
     }
 
-    public static ArticleDetailDto from(Article article) {
+    public static ArticleDetailDto from(Article article, List<String> hashtagList) {
         return new ArticleDetailDto(
                 article.getId(),
                 article.getTitle(),
@@ -51,6 +56,7 @@ public class ArticleDetailDto {
                 article.getDislikesCount(),
                 article.getUser().getName(),
                 article.getArticleCategory().getTitle(),
+                hashtagList,
                 article.getCreatedAt()
         );
     }
