@@ -8,8 +8,6 @@ import java.util.List;
 
 public interface ArticleHashtagRepository extends JpaRepository<ArticleHashtag, Long> {
 
-    void deleteAllByArticle(Article article);
-
     void deleteArticleHashtagsByArticle(Article article);
 
     List<ArticleHashtag> findAllByArticle(Article article);
