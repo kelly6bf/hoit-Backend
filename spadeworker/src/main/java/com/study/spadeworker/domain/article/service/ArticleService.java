@@ -90,9 +90,12 @@ public class ArticleService {
     public ArticleDetailDto getArticleDetail(Long articleId) {
         Article article = articleRepository.findById(articleId)
                 .orElseThrow(() -> new EntityNotFoundException("게시글이 존재하지 않습니다."));
-        List<String> articleHashtagList = hashtagService.getArticleHashtagList(article);
+        userService.getUserAccountInfo(article.getUser());
 
-        return ArticleDetailDto.from(article, articleHashtagList);
-
+        return ArticleDetailDto.from(
+                article,
+                userService.getUserAccountInfo(article.getUser()),
+                hashtagService.getArticleHashtagList(article)
+                );
     }
 }

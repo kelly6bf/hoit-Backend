@@ -1,5 +1,6 @@
 package com.study.spadeworker.domain.user.service;
 
+import com.study.spadeworker.domain.user.dto.UserAccountDto;
 import com.study.spadeworker.domain.user.entity.User;
 import com.study.spadeworker.domain.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -16,5 +17,9 @@ public class UserService {
     public User getCurrentUser() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         return userRepository.findByLoginId(authentication.getName());
+    }
+
+    public UserAccountDto getUserAccountInfo(User user) {
+        return UserAccountDto.from(user);
     }
 }
