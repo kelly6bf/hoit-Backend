@@ -9,11 +9,11 @@ import java.util.List;
 public class ArticleWithCommentsDto {
 
     private ArticleDto article;
-    private List<ArticleCommentDto> comments;
+    private List<ArticleCommentDto> commentList;
 
     @Builder
-    public ArticleWithCommentsDto(ArticleDto article, List<ArticleCommentDto> comments) {
+    public ArticleWithCommentsDto(ArticleDto article, List<ArticleCommentDto> commentList) {
         this.article = article;
-        this.comments = comments;
+        this.commentList = commentList;
     }
 }

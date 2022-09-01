@@ -14,7 +14,7 @@ public class BoardService {
     private final BoardRepository boardRepository;
 
     // 게시판 id를 통해 게시판 Entity 조회
-    public Board getBoardById(Long boardId) {
+    public Board getBoard(Long boardId) {
         return boardRepository.findById(boardId)
                 .orElseThrow(() -> new EntityNotFoundException("해당 아이디의 게시판이 존재하지 않습니다."));
     }

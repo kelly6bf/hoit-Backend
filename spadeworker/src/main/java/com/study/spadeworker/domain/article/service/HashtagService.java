@@ -53,12 +53,12 @@ public class HashtagService {
     @Transactional(readOnly = true)
     public List<String> getArticleHashtagList(Article article) {
         List<ArticleHashtag> articleHashtagList = articleHashtagRepository.findAllByArticle(article);
-        List<String> hashtagList = new ArrayList<>();
+        List<String> hashtagTitleList = new ArrayList<>();
 
         for (ArticleHashtag ah : articleHashtagList) {
-            hashtagList.add(ah.getHashtag().getTitle());
+            hashtagTitleList.add(ah.getHashtag().getTitle());
         }
 
-        return hashtagList;
+        return hashtagTitleList;
     }
 }

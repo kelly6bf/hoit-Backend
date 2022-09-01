@@ -19,15 +19,15 @@ public class ArticleCommentService {
     private final UserService userService;
 
     @Transactional(readOnly = true)
-    public List<ArticleCommentDto> searchArticleComments(Long articleId) {
-        List<ArticleComment> articleComments = articleCommentRepository.findByArticle_Id(articleId);
-        List<ArticleCommentDto> articleCommentList = new ArrayList<>();
-        for (ArticleComment ac : articleComments) {
-            articleCommentList.add(
-                    ArticleCommentDto.from(ac, userService.getUserAccountInfo(ac.getUser()))
+    public List<ArticleCommentDto> getArticleCommentList(Long articleId) {
+        List<ArticleComment> articleCommentList = articleCommentRepository.findByArticle_Id(articleId);
+        List<ArticleCommentDto> articleCommentDtoList = new ArrayList<>();
+        for (ArticleComment ac : articleCommentList) {
+            articleCommentDtoList.add(
+                    ArticleCommentDto.from(ac, userService.getUserAccountDto(ac.getUser()))
             );
         }
 
-        return articleCommentList;
+        return articleCommentDtoList;
     }
 }

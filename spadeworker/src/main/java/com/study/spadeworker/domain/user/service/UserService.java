@@ -19,7 +19,7 @@ public class UserService {
         return userRepository.findByLoginId(authentication.getName());
     }
 
-    public UserAccountDto getUserAccountInfo(User user) {
+    public UserAccountDto getUserAccountDto(User user) {
         return UserAccountDto.from(user);
     }
 }
