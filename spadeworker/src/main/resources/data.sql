@@ -61,13 +61,13 @@ values ('댓글5 입니다!!!', 0, 0, 0, 1, 2, null, null, now(), '게시글 최
 
 -- 게시글 대댓글 테스트 데이터
 insert into article_comment(content, likes_count, dislikes_count, is_child, article_id, user_id, parent_comment_id, recipient_id, created_at, created_by, modified_at, modified_by)
-values ('대댓글5 입니다!!!', 0, 0, 1, 1, 3, 3, null, now(), '대댓글 작성자', now(), '대댓글 작성자')
+values ('대댓글5 입니다!!!', 0, 0, 1, 1, 3, 3, NULL, now(), '대댓글 작성자', now(), '대댓글 작성자')
     ON DUPLICATE KEY UPDATE `content`=VALUES(`content`);
 
 insert into article_comment(content, likes_count, dislikes_count, is_child, article_id, user_id, parent_comment_id, recipient_id, created_at, created_by, modified_at, modified_by)
-values ('대댓글5 입니다!!!', 0, 0, 1, 1, 3, 3, 2, now(), '대댓글 작성자', now(), '대댓글 작성자')
+values ('대댓글5 입니다!!!', 0, 0, 1, 1, 3, 3, NULL, now(), '대댓글 작성자', now(), '대댓글 작성자')
     ON DUPLICATE KEY UPDATE `content`=VALUES(`content`);
 
 insert into article_comment(content, likes_count, dislikes_count, is_child, article_id, user_id, parent_comment_id, recipient_id, created_at, created_by, modified_at, modified_by)
-values ('전 님 의견 반박합니다!!!!!!!', 0, 0, 1, 1, 3, 3, null, now(), '대댓글 작성자', now(), '대댓글 작성자')
+values ('전 님 의견 반박합니다!!!!!!!', 0, 0, 1, 1, 3, 3, 3, now(), '대댓글 작성자', now(), '대댓글 작성자')
     ON DUPLICATE KEY UPDATE `content`=VALUES(`content`);
