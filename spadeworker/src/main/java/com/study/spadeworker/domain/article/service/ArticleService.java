@@ -87,6 +87,9 @@ public class ArticleService {
                 );
     }
 
+    /**
+     * 특정 게시글 내용과 댓글 리스트 조회 비즈니스
+     */
     @Transactional(readOnly = true)
     public ArticleWithCommentsDto getArticleWithComments(Long articleId) {
         ArticleDto articleDto = getArticle(articleId);
