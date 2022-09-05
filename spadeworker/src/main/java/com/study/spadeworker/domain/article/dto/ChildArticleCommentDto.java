@@ -11,10 +11,10 @@ public class ChildArticleCommentDto {
 
     private Long id;
     private Long parentCommentId;
-    private UserAccountDto recipient;
     private String content;
     private int likesCount;
     private int dislikesCount;
+    private UserAccountDto recipient;
     private LocalDateTime createdAt;
     private UserAccountDto user;
 
@@ -40,8 +40,8 @@ public class ChildArticleCommentDto {
 
     public static ChildArticleCommentDto from(
             ArticleComment articleComment,
-            UserAccountDto recipient,
-            UserAccountDto userAccountDto
+            UserAccountDto userAccountDto,
+            UserAccountDto recipient
     ) {
         return new ChildArticleCommentDto(
                 articleComment.getId(),
