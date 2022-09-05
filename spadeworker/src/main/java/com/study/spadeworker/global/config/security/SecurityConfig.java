@@ -79,6 +79,7 @@ public class SecurityConfig {
         http.authorizeRequests()
                 .requestMatchers(CorsUtils::isPreFlightRequest).permitAll()
                 .antMatchers(HttpMethod.GET, "/api/article/**").permitAll()
+                .antMatchers(HttpMethod.GET, "/api/auth/refresh").permitAll()
 //                .antMatchers("/api/admin/**").hasAnyAuthority(RoleType.ADMIN.getCode())
                 // 나머지는 모두 인증 필요
                 .anyRequest().authenticated();
