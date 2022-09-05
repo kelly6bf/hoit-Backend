@@ -33,7 +33,7 @@ public class ArticleDto {
                        LocalDateTime createdAt,
                        UserAccountDto userAccountDto,
                        List<String> hashtagList
-                             ) {
+    ) {
         this.id = articleId;
         this.title = title;
         this.content = content;
@@ -45,7 +45,11 @@ public class ArticleDto {
         this.createdAt = createdAt;
     }
 
-    public static ArticleDto from(Article article, UserAccountDto userAccountDto, List<String> hashtagList) {
+    public static ArticleDto from(
+            Article article,
+            UserAccountDto userAccountDto,
+            List<String> hashtagList
+    ) {
         return new ArticleDto(
                 article.getId(),
                 article.getTitle(),
