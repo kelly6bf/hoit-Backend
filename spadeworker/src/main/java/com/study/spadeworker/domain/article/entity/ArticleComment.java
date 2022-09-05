@@ -53,17 +53,10 @@ public class ArticleComment extends BaseEntity {
     }
 
     /**
-     * 최상위 댓글 작성
+     * 게시글 댓글 생성
      */
-    public static ArticleComment createRootComment(String content, Article article, User user) {
-        return new ArticleComment(content, false, article, user, null, null);
-    }
-
-    /**
-     * 대댓글 작성
-     */
-    public static ArticleComment createChildComment(String content, Article article, User user, ArticleComment parentComment, User recipient) {
-        return new ArticleComment(content, true, article, user, parentComment, recipient);
+    public static ArticleComment createComment(String content, Boolean isChild, Article article, User user, ArticleComment parentComment, User recipient) {
+        return new ArticleComment(content, isChild, article, user, parentComment, recipient);
     }
 
     @Override
