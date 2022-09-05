@@ -1,4 +1,4 @@
-package com.study.spadeworker.domain.article.dto;
+package com.study.spadeworker.domain.article.dto.article;
 
 import com.study.spadeworker.domain.article.entity.Article;
 import com.study.spadeworker.domain.user.dto.UserAccountDto;

@@ -1,4 +1,4 @@
-package com.study.spadeworker.domain.article.dto;
+package com.study.spadeworker.domain.article.dto.articleComment;
 
 import com.study.spadeworker.domain.article.entity.ArticleComment;
 import com.study.spadeworker.domain.user.dto.UserAccountDto;
@@ -15,8 +15,9 @@ public class ArticleCommentDto {
     private int likesCount;
     private int dislikesCount;
     private LocalDateTime createdAt;
+    private Long articleId;
     private UserAccountDto user;
-    private List<ChildArticleCommentDto> childArticleCommentList;
+    private List<ArticleChildCommentDto> childArticleCommentList;
 
     private ArticleCommentDto(
             Long id,
@@ -24,14 +25,16 @@ public class ArticleCommentDto {
             int likesCount,
             int dislikesCount,
             LocalDateTime createdAt,
+            Long articleId,
             UserAccountDto userAccountDto,
-            List<ChildArticleCommentDto> childArticleCommentList
+            List<ArticleChildCommentDto> childArticleCommentList
     ) {
         this.id = id;
         this.content = content;
         this.likesCount = likesCount;
         this.dislikesCount = dislikesCount;
         this.createdAt = createdAt;
+        this.articleId = articleId;
         this.user = userAccountDto;
         this.childArticleCommentList = childArticleCommentList;
     }
@@ -39,7 +42,7 @@ public class ArticleCommentDto {
     public static ArticleCommentDto from(
             ArticleComment articleComment,
             UserAccountDto userAccountDto,
-            List<ChildArticleCommentDto> childArticleCommentList
+            List<ArticleChildCommentDto> childArticleCommentList
     ) {
         return new ArticleCommentDto(
                 articleComment.getId(),
@@ -47,6 +50,7 @@ public class ArticleCommentDto {
                 articleComment.getLikesCount(),
                 articleComment.getDislikesCount(),
                 articleComment.getCreatedAt(),
+                articleComment.getArticle().getId(),
                 userAccountDto,
                 childArticleCommentList
         );

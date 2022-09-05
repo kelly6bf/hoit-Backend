@@ -1,8 +1,8 @@
 package com.study.spadeworker.domain.article.controller;
 
 import com.study.spadeworker.domain.article.dto.ArticleWithCommentsDto;
-import com.study.spadeworker.domain.article.dto.CreateArticleDto;
-import com.study.spadeworker.domain.article.dto.UpdateArticleDto;
+import com.study.spadeworker.domain.article.dto.article.CreateArticleDto;
+import com.study.spadeworker.domain.article.dto.article.UpdateArticleDto;
 import com.study.spadeworker.domain.article.service.ArticleService;
 import com.study.spadeworker.global.response.CommonResult;
 import com.study.spadeworker.global.response.ResponseService;
@@ -20,8 +20,8 @@ import javax.validation.Valid;
 @RestController
 public class ArticleController {
 
-    private final ArticleService articleService;
     private final ResponseService responseService;
+    private final ArticleService articleService;
 
     /**
      * 게시물 생성 API

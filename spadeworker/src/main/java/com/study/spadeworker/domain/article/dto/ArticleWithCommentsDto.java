@@ -1,5 +1,7 @@
 package com.study.spadeworker.domain.article.dto;
 
+import com.study.spadeworker.domain.article.dto.article.ArticleDto;
+import com.study.spadeworker.domain.article.dto.articleComment.ArticleCommentDto;
 import lombok.Builder;
 import lombok.Getter;
 

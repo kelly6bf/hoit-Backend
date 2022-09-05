@@ -1,4 +1,4 @@
-package com.study.spadeworker.domain.article.dto;
+package com.study.spadeworker.domain.article.dto.article;
 
 import lombok.*;
 
@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
-public class CreateArticleDto {
+public class UpdateArticleDto {
 
     @Getter
     @AllArgsConstructor
@@ -27,9 +27,6 @@ public class CreateArticleDto {
         private String articleCategory;
 
         private List<String> hashtagList = new ArrayList<>();
-
-        @Setter
-        private Long boardId;
     }
 
     @Getter
