@@ -1,8 +1,8 @@
 package com.study.spadeworker.domain.article.controller;
 
-import com.study.spadeworker.domain.article.dto.ArticleDetailDto;
-import com.study.spadeworker.domain.article.dto.CreateArticleDto;
-import com.study.spadeworker.domain.article.dto.UpdateArticleDto;
+import com.study.spadeworker.domain.article.dto.ArticleWithCommentsDto;
+import com.study.spadeworker.domain.article.dto.article.CreateArticleDto;
+import com.study.spadeworker.domain.article.dto.article.UpdateArticleDto;
 import com.study.spadeworker.domain.article.service.ArticleService;
 import com.study.spadeworker.global.response.CommonResult;
 import com.study.spadeworker.global.response.ResponseService;
@@ -20,8 +20,8 @@ import javax.validation.Valid;
 @RestController
 public class ArticleController {
 
-    private final ArticleService articleService;
     private final ResponseService responseService;
+    private final ArticleService articleService;
 
     /**
      * 게시물 생성 API
@@ -74,18 +74,18 @@ public class ArticleController {
     }
 
     /**
-     * 게시물 단건 상세조회 API
+     * 게시글 단건 및 게시글 댓글 리스트 조회 API
      */
     @GetMapping("/article/{articleId}")
-    public SingleResult<ArticleDetailDto> getArticleDetail(
+    public SingleResult<ArticleWithCommentsDto> getArticleDetail(
             @PathVariable final Long articleId
     ) {
-        ArticleDetailDto articleDetail = articleService.getArticleDetail(articleId);
+        ArticleWithCommentsDto articleWithCommentsDto = articleService.getArticleWithComments(articleId);
 
         return responseService.getSingleResult(
                 HttpStatus.OK.value(),
                 "성공적으로 게시글이 조회되었습니다.",
-                articleDetail
+                articleWithCommentsDto
         );
     }
 }

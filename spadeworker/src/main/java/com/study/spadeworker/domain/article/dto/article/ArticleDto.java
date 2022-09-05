@@ -1,7 +1,6 @@
-package com.study.spadeworker.domain.article.dto;
+package com.study.spadeworker.domain.article.dto.article;
 
 import com.study.spadeworker.domain.article.entity.Article;
-import com.study.spadeworker.domain.article.entity.ArticleCategory;
 import com.study.spadeworker.domain.user.dto.UserAccountDto;
 import lombok.Getter;
 
@@ -9,8 +8,8 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @Getter
-public class ArticleDetailDto {
-    private Long articleId;
+public class ArticleDto {
+    private Long id;
 
     private String title;
 
@@ -25,18 +24,17 @@ public class ArticleDetailDto {
     private UserAccountDto user;
     private List<String> hashtagList;
 
-
-    private ArticleDetailDto(Long articleId,
-                             String title,
-                             String content,
-                             int likesCount,
-                             int dislikesCount,
-                             String articleCategory,
-                             LocalDateTime createdAt,
-                             UserAccountDto userAccountDto,
-                             List<String> hashtagList
-                             ) {
-        this.articleId = articleId;
+    private ArticleDto(Long articleId,
+                       String title,
+                       String content,
+                       int likesCount,
+                       int dislikesCount,
+                       String articleCategory,
+                       LocalDateTime createdAt,
+                       UserAccountDto userAccountDto,
+                       List<String> hashtagList
+    ) {
+        this.id = articleId;
         this.title = title;
         this.content = content;
         this.likesCount = likesCount;
@@ -47,8 +45,12 @@ public class ArticleDetailDto {
         this.createdAt = createdAt;
     }
 
-    public static ArticleDetailDto from(Article article, UserAccountDto userAccountDto, List<String> hashtagList) {
-        return new ArticleDetailDto(
+    public static ArticleDto from(
+            Article article,
+            UserAccountDto userAccountDto,
+            List<String> hashtagList
+    ) {
+        return new ArticleDto(
                 article.getId(),
                 article.getTitle(),
                 article.getContent(),
