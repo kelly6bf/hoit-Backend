@@ -1,6 +1,10 @@
 package com.study.spadeworker.domain.article.service;
 
 import com.study.spadeworker.domain.article.dto.*;
+import com.study.spadeworker.domain.article.dto.article.ArticleDto;
+import com.study.spadeworker.domain.article.dto.article.CreateArticleDto;
+import com.study.spadeworker.domain.article.dto.article.UpdateArticleDto;
+import com.study.spadeworker.domain.article.dto.articleComment.ArticleCommentDto;
 import com.study.spadeworker.domain.article.entity.Article;
 import com.study.spadeworker.domain.article.entity.ArticleCategory;
 import com.study.spadeworker.domain.article.repository.ArticleCategoryRepository;
@@ -102,14 +106,16 @@ public class ArticleService {
     }
 
     // 게시글 Entity 조회 메서드
-    private Article getArticleEntity(Long
+    @Transactional(readOnly = true)
+    public Article getArticleEntity(Long
                                              articleId) {
         return articleRepository.findById(articleId)
                 .orElseThrow(() -> new EntityNotFoundException("게시글이 존재하지 않습니다."));
     }
 
     // 게시글 카테고리 Entity 조회
-    private ArticleCategory getArticleCategoryEntity(String category) {
+    @Transactional(readOnly = true)
+    protected ArticleCategory getArticleCategoryEntity(String category) {
         return articleCategoryRepository.findByTitle(category);
     }
 }
