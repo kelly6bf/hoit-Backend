@@ -26,22 +26,44 @@ public class ArticleComment extends BaseEntity {
     @Column(nullable = false)
     private int dislikesCount;
 
+    @Column(nullable = false)
+    private Boolean isChild;
+
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     private Article article;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     private User user;
 
-    private ArticleComment(String content, Article article, User user) {
+    @ManyToOne(fetch = FetchType.LAZY, optional = true)
+    private ArticleComment parentComment;
+
+    @OneToOne(fetch = FetchType.LAZY, optional = true)
+    private User recipient;
+
+    private ArticleComment(String content, Boolean isChild, Article article, User user, ArticleComment parentComment, User recipient) {
         this.content = content;
         this.likesCount = 0;
         this.dislikesCount = 0;
+        this.isChild = isChild;
         this.article = article;
         this.user = user;
+        this.parentComment = parentComment;
+        this.recipient = recipient;
     }
 
-    public static ArticleComment of(String content, Article article, User user) {
-        return new ArticleComment(content, article, user);
+    /**
+     * 최상위 댓글 작성
+     */
+    public static ArticleComment createRootComment(String content, Article article, User user) {
+        return new ArticleComment(content, false, article, user, null, null);
+    }
+
+    /**
+     * 대댓글 작성
+     */
+    public static ArticleComment createChildComment(String content, Article article, User user, ArticleComment parentComment, User recipient) {
+        return new ArticleComment(content, true, article, user, parentComment, recipient);
     }
 
     @Override
