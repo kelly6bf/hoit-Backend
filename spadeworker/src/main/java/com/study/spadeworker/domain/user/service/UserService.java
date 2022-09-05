@@ -20,6 +20,6 @@ public class UserService {
     }
 
     public UserAccountDto getUserAccountDto(User user) {
-        return UserAccountDto.from(user);
+        return (user != null) ? UserAccountDto.from(user) : null;
     }
 }
