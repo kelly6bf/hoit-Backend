@@ -101,8 +101,7 @@ public class ArticleCommentService {
                         user,
                         getArticleCommentEntity(request.getParentCommentId()),
                         (request.getRecipientId() != null) ?
-                                userService.getUserEntity(request.getRecipientId()) :
-                                null
+                                userService.getUserEntity(request.getRecipientId()) : null
                 )
         ).getId();
     }
@@ -119,5 +118,32 @@ public class ArticleCommentService {
     public Article getArticleEntity(Long articleId) {
         return articleRepository.findById(articleId)
                 .orElseThrow(() -> new EntityNotFoundException("게시글이 존재하지 않습니다."));
+    }
+
+    /**
+     * 게시글 댓글 수정 비즈니스 로직
+     */
+    public Long updateArticleComment(
+            UpdateArticleCommentDto.Request request
+    ) {
+        ArticleComment articleComment = getArticleCommentEntity(request.getArticleCommentId());
+        articleComment.updateArticleComment(
+                request.getContent(),
+                (request.getRecipientId() != null) ?
+                        userService.getUserEntity(request.getRecipientId()) : null
+        );
+
+        return articleComment.getId();
+    }
+
+    /**
+     * 게시글 댓글 삭제 비즈니스 로직
+     */
+    public void deleteArticleComment(
+            Long articleCommentId
+    ) {
+        articleCommentRepository.delete(
+                getArticleCommentEntity(articleCommentId)
+        );
     }
 }

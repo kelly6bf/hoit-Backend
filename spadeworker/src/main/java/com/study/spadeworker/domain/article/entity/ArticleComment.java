@@ -59,6 +59,14 @@ public class ArticleComment extends BaseEntity {
         return new ArticleComment(content, isChild, article, user, parentComment, recipient);
     }
 
+    /**
+     * 게시글 댓글 수정
+     */
+    public void updateArticleComment(String content, User recipient) {
+        this.content = content;
+        this.recipient = recipient;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
