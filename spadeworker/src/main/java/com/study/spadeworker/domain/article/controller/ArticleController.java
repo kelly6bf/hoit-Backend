@@ -1,18 +1,25 @@
 package com.study.spadeworker.domain.article.controller;
 
+import com.study.spadeworker.domain.article.constant.OrderType;
 import com.study.spadeworker.domain.article.dto.ArticleWithCommentsDto;
+import com.study.spadeworker.domain.article.dto.article.ArticleDto;
 import com.study.spadeworker.domain.article.dto.article.CreateArticleDto;
 import com.study.spadeworker.domain.article.dto.article.UpdateArticleDto;
 import com.study.spadeworker.domain.article.service.ArticleService;
 import com.study.spadeworker.global.response.CommonResult;
+import com.study.spadeworker.global.response.ListResult;
 import com.study.spadeworker.global.response.ResponseService;
 import com.study.spadeworker.global.response.SingleResult;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+
+import static org.springframework.http.HttpStatus.*;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -35,7 +42,7 @@ public class ArticleController {
         Long createdArticleId = articleService.createArticle(request);
 
         return responseService.getSingleResult(
-                HttpStatus.OK.value(),
+                OK.value(),
                 "성공적으로 게시글이 작성되었습니다.",
                 CreateArticleDto.Response.of(createdArticleId)
         );
@@ -52,7 +59,7 @@ public class ArticleController {
         Long updatedArticleId = articleService.updateArticle(articleId, request);
 
         return responseService.getSingleResult(
-                HttpStatus.OK.value(),
+                OK.value(),
                 "성공적으로 게시글이 수정되었습니다.",
                 UpdateArticleDto.Response.of(updatedArticleId)
         );
@@ -68,7 +75,7 @@ public class ArticleController {
         articleService.deleteArticle(articleId);
 
         return responseService.getSuccessResult(
-                HttpStatus.OK.value(),
+                OK.value(),
                 "성공적으로 게시글이 삭제되었습니다."
         );
     }
@@ -83,9 +90,29 @@ public class ArticleController {
         ArticleWithCommentsDto articleWithCommentsDto = articleService.getArticleWithComments(articleId);
 
         return responseService.getSingleResult(
-                HttpStatus.OK.value(),
+                OK.value(),
                 "성공적으로 게시글이 조회되었습니다.",
                 articleWithCommentsDto
+        );
+    }
+
+    /**
+     * 해당 게시판의 게시글 전체 리스트 조회 및 정렬
+     */
+    @GetMapping("/board/{boardId}/articles")
+    public ListResult<ArticleDto> getAllArticle(
+            @PathVariable final Long boardId,
+            @RequestParam(value = "order", required = false) OrderType orderType,
+            @PageableDefault(size = 3) Pageable pageable
+    ) {
+        return responseService.getListResult(
+                OK.value(),
+                "성공적으로 게시글이 조회되었습니다.",
+                articleService.getAllArticle(
+                        boardId,
+                        orderType,
+                        pageable
+                ).getContent()
         );
     }
 }
