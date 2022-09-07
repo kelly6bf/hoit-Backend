@@ -1,5 +1,6 @@
 package com.study.spadeworker.domain.article.service;
 
+import com.study.spadeworker.domain.article.constant.OrderType;
 import com.study.spadeworker.domain.article.dto.*;
 import com.study.spadeworker.domain.article.dto.article.ArticleDto;
 import com.study.spadeworker.domain.article.dto.article.CreateArticleDto;
@@ -12,6 +13,8 @@ import com.study.spadeworker.domain.article.repository.ArticleRepository;
 import com.study.spadeworker.domain.board.service.BoardService;
 import com.study.spadeworker.domain.user.service.UserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -82,13 +85,7 @@ public class ArticleService {
     @Transactional(readOnly = true)
     public ArticleDto getArticle(Long articleId) {
         Article article = getArticleEntity(articleId);
-        userService.getUserAccountDto(article.getUser());
-
-        return ArticleDto.from(
-                article,
-                userService.getUserAccountDto(article.getUser()),
-                hashtagService.getArticleHashtagList(article)
-                );
+        return convertArticleToArticleDto(article);
     }
 
     /**
@@ -105,6 +102,34 @@ public class ArticleService {
                 .build();
     }
 
+    /**
+     * 특정 게시판 모든 게시글 조회 및 정렬
+     */
+    @Transactional(readOnly = true)
+    public Page<ArticleDto> getAllArticle(
+            Long boardId,
+            OrderType orderType,
+            Pageable pageable) {
+
+        if (orderType == null || orderType == OrderType.RECENT) {
+            return articleRepository.
+                    findByBoard_IdOrderByCreatedAtDesc(boardId, pageable)
+                    .map(this::convertArticleToArticleDto);
+        }
+
+        return switch (orderType) {
+            case RECENT -> articleRepository.
+                    findByBoard_IdOrderByCreatedAtDesc(boardId, pageable)
+                    .map(this::convertArticleToArticleDto);
+            case LIKES -> articleRepository.
+                    findByBoard_IdOrderByLikesCountDesc(boardId, pageable)
+                    .map(this::convertArticleToArticleDto);
+            case COMMENT -> articleRepository.
+                    findByBoard_IdOrderByCommentsCount(boardId, pageable)
+                    .map(this::convertArticleToArticleDto);
+        };
+    }
+
     // 게시글 Entity 조회 메서드
     @Transactional(readOnly = true)
     public Article getArticleEntity(Long
@@ -117,5 +142,16 @@ public class ArticleService {
     @Transactional(readOnly = true)
     protected ArticleCategory getArticleCategoryEntity(String category) {
         return articleCategoryRepository.findByTitle(category);
+    }
+
+    // Article -> ArticleDto 변환
+    private ArticleDto convertArticleToArticleDto(Article article) {
+        userService.getUserAccountDto(article.getUser());
+
+        return ArticleDto.from(
+                article,
+                userService.getUserAccountDto(article.getUser()),
+                hashtagService.getArticleHashtagList(article)
+        );
     }
 }
