@@ -78,6 +78,7 @@ public class SecurityConfig {
         // 권한별 요청 설정
         http.authorizeRequests()
                 .requestMatchers(CorsUtils::isPreFlightRequest).permitAll()
+                .antMatchers(HttpMethod.GET, "/api/board/**").permitAll()
                 .antMatchers(HttpMethod.GET, "/api/article/**").permitAll()
                 .antMatchers(HttpMethod.GET, "/api/auth/refresh").permitAll()
 //                .antMatchers("/api/admin/**").hasAnyAuthority(RoleType.ADMIN.getCode())
