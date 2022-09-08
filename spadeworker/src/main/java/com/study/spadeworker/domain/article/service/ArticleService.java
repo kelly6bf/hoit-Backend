@@ -1,8 +1,8 @@
 package com.study.spadeworker.domain.article.service;
 
-import com.study.spadeworker.domain.article.constant.OrderType;
-import com.study.spadeworker.domain.article.dto.*;
+import com.study.spadeworker.domain.article.dto.ArticleWithCommentsDto;
 import com.study.spadeworker.domain.article.dto.article.ArticleDto;
+import com.study.spadeworker.domain.article.dto.article.ArticlesViewOptionDto;
 import com.study.spadeworker.domain.article.dto.article.CreateArticleDto;
 import com.study.spadeworker.domain.article.dto.article.UpdateArticleDto;
 import com.study.spadeworker.domain.article.dto.articleComment.ArticleCommentDto;
@@ -62,7 +62,7 @@ public class ArticleService {
                 request.getTitle(),
                 request.getContent(),
                 getArticleCategoryEntity(request.getArticleCategory())
-                );
+        );
 
         // 해시태그 변경 적용
         hashtagService.updateArticleHashtag(request.getHashtagList(), article);
@@ -103,37 +103,29 @@ public class ArticleService {
     }
 
     /**
-     * 특정 게시판 모든 게시글 조회 및 정렬
+     * 특정 게시판의 조건에 맞는 모든 게시글 조회 및 정렬 비즈니스 로직
      */
     @Transactional(readOnly = true)
-    public Page<ArticleDto> getAllArticle(
+    public Page<ArticleDto> getArticles(
             Long boardId,
-            OrderType orderType,
+            ArticlesViewOptionDto articlesViewOptionDto,
             Pageable pageable) {
 
-        if (orderType == null || orderType == OrderType.RECENT) {
-            return articleRepository.
-                    findByBoard_IdOrderByCreatedAtDesc(boardId, pageable)
-                    .map(this::convertArticleToArticleDto);
-        }
+        int size = articleRepository.getArticlesByBoard(boardId, articlesViewOptionDto, pageable).getContent().size();
+        System.out.println("몇개 나와요? : " + size);
 
-        return switch (orderType) {
-            case RECENT -> articleRepository.
-                    findByBoard_IdOrderByCreatedAtDesc(boardId, pageable)
-                    .map(this::convertArticleToArticleDto);
-            case LIKES -> articleRepository.
-                    findByBoard_IdOrderByLikesCountDesc(boardId, pageable)
-                    .map(this::convertArticleToArticleDto);
-            case COMMENT -> articleRepository.
-                    findByBoard_IdOrderByCommentsCount(boardId, pageable)
-                    .map(this::convertArticleToArticleDto);
-        };
+        return articleRepository
+                .getArticlesByBoard(
+                        boardId,
+                        articlesViewOptionDto,
+                        pageable
+                ).map(this::convertArticleToArticleDto);
     }
 
     // 게시글 Entity 조회 메서드
     @Transactional(readOnly = true)
     public Article getArticleEntity(Long
-                                             articleId) {
+                                            articleId) {
         return articleRepository.findById(articleId)
                 .orElseThrow(() -> new EntityNotFoundException("게시글이 존재하지 않습니다."));
     }
