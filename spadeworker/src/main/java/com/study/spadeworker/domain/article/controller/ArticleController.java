@@ -102,7 +102,7 @@ public class ArticleController {
     public ListResult<ArticleDto> getArticles(
             @PathVariable final Long boardId,
             ArticlesViewOptionDto articlesViewOptionDto,
-            @PageableDefault(size = 3) Pageable pageable
+            @PageableDefault(size = 10) Pageable pageable
     ) {
         return responseService.getListResult(
                 OK.value(),
