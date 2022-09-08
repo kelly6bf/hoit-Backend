@@ -1,14 +1,14 @@
 package com.study.spadeworker.domain.article.dto.article;
 
 import com.study.spadeworker.domain.article.constant.OrderType;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 
 @Getter
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class ArticlesViewOptionDto {
 
-    private final OrderType orderType;
+    private final OrderType order;
 
     private final String hashtag;
 
