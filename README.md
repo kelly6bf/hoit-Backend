@@ -1,6 +1,14 @@
-# SpadeWorker 게시판 서비스
+# host-IT API Server 프로토타입 개발 프로젝트
 
-> 지금까지 학습했던 다양한 내용을 활용하기 위해 간단한 게시판 서비스를 제작해봅니다. 기본적인 기술 스택을 기반으로 그때그때 학습한 기술이나 테크닉을 프로젝트에 녹여봅니다.
+> host-IT 에서 진행되는 개발 프로젝트의 기획이 구체화 되기 전, 프로젝트의 기반이 될 게시판 형태의 API 서버를 프로토타입형태로 개발합니다.
+
+## 프로젝트 구현 계획
+
+* Social Login
+* 게시판 형태의 CRUD API
+* 댓글 형태의 CRUD API
+* 해시태그 기능
+* 그 밖에 프로젝트에 필요하다고 판단되는 모든 기능
 
 ## 개발 환경
 
@@ -36,6 +44,5 @@ Etc
 ## Reference
 
 * ERD Diagram(Erd-Cloud) : https://www.erdcloud.com/d/GBddmnpZcbfuATjeQ
-* Project Record : https://succulent-bottle-ad0.notion.site/Spadeworker-63ed747caee84abbb1d3ad2c02e30d9b
 
 
