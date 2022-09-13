@@ -7,13 +7,13 @@ spring:
     password: ${spring.datasource.password}
   jpa:
     hibernate:
-      ddl-auto: create
+      ddl-auto: none
     show-sql: true
     properties:
       hibernate:
         format_sql: true
-    defer-datasource-initialization: true
-  sql.init.mode: always
+#    defer-datasource-initialization: true
+#  sql.init.mode: always
   # OAuth Config
   security:
     oauth2.client:

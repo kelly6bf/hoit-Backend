@@ -1,6 +1,5 @@
 package com.study.spadeworker.domain.article.repository;
 
-import com.study.spadeworker.domain.article.constant.OrderType;
 import com.study.spadeworker.domain.article.dto.article.ArticlesViewOptionDto;
 import com.study.spadeworker.domain.article.entity.Article;
 import org.springframework.data.domain.Page;
