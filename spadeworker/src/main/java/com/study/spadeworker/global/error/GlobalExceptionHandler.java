@@ -1,5 +1,6 @@
 package com.study.spadeworker.global.error;
 
+import com.study.spadeworker.global.error.exception.BusinessException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,6 +13,19 @@ import static com.study.spadeworker.global.error.GlobalErrorCode.*;
 @RestControllerAdvice
 @Slf4j
 public class GlobalExceptionHandler {
+
+    /**
+     * 비지니스 요구사항에 맞지 않은 경우 발생하는 예외를 핸들링
+     */
+    @ExceptionHandler(BusinessException.class)
+    protected ResponseEntity<ErrorResponse> handleBusinessException(BusinessException e) {
+        log.error("BusinessException", e);
+
+        return new ResponseEntity<>(
+                ErrorResponse.of(e.getErrorCode()),
+                HttpStatus.valueOf(e.getErrorCode().getStatus())
+        );
+    }
 
     /**
      * 유효하지 않은 클라이언트의 요청 값 예외 처리
