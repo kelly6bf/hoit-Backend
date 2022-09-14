@@ -1,0 +1,55 @@
+package com.study.spadeworker.global.error;
+
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.HttpRequestMethodNotSupportedException;
+import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.RestControllerAdvice;
+
+import static com.study.spadeworker.global.error.GlobalErrorCode.*;
+
+@RestControllerAdvice
+@Slf4j
+public class GlobalExceptionHandler {
+
+    /**
+     * 유효하지 않은 클라이언트의 요청 값 예외 처리
+     */
+    @ExceptionHandler(IllegalArgumentException.class)
+    protected ResponseEntity<ErrorResponse> handleIllegalArgumentException(IllegalArgumentException e) {
+        log.error("handle IllegalArgumentException", e);
+
+        return new ResponseEntity<>(
+                ErrorResponse.of(INVALID_INPUT_VALUE),
+                HttpStatus.valueOf(INVALID_INPUT_VALUE.getStatus())
+        );
+    }
+
+    /**
+     * 잘못된 HTTP Method 요청 예외 처리
+     */
+    @ExceptionHandler(HttpRequestMethodNotSupportedException.class)
+    protected ResponseEntity<ErrorResponse> handleHttpRequestMethodNotSupportedException(HttpRequestMethodNotSupportedException e) {
+        log.error("handle HttpRequestMethodNotSupportedException", e);
+
+        return new ResponseEntity<>(
+                ErrorResponse.of(METHOD_NOT_ALLOWED),
+                HttpStatus.valueOf(METHOD_NOT_ALLOWED.getStatus())
+        );
+    }
+
+    /**
+     * 모든 예외를 처리
+     * 웬만해서 여기까지 오면 안됨
+     */
+    @ExceptionHandler(Exception.class)
+    protected ResponseEntity<ErrorResponse> handleException(Exception e) {
+        log.error("handle Exception", e);
+
+        return new ResponseEntity<>(
+                ErrorResponse.of(INTERNAL_SERVER_ERROR),
+                HttpStatus.valueOf(INTERNAL_SERVER_ERROR.getStatus())
+        );
+    }
+}
