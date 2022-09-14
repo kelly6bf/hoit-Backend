@@ -10,15 +10,13 @@ import java.util.List;
 @Getter
 public class ErrorResponse {
 
-    private Boolean isSuccess;
+    private String message;
     private int status;
     private String code;
-    private String message;
     private List<FieldError> errors;
     private LocalDateTime timestamp;
 
     private ErrorResponse(String message, int status, String code) {
-        this.isSuccess = false;
         this.message = message;
         this.status = status;
         this.errors = new ArrayList<>();
