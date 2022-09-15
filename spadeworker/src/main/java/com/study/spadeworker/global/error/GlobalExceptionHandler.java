@@ -5,6 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
@@ -15,11 +16,23 @@ import static com.study.spadeworker.global.error.GlobalErrorCode.*;
 public class GlobalExceptionHandler {
 
     /**
+     * Java Bean Validation 예외 핸들링
+     */
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    protected ResponseEntity<ErrorResponse> handleMethodArgumentNotValidException(MethodArgumentNotValidException e) {
+        log.error("handle MethodArgumentNotValidException", e);
+        return new ResponseEntity<>(
+                ErrorResponse.of(INVALID_INPUT_VALUE, e.getBindingResult()),
+                HttpStatus.BAD_REQUEST
+        );
+    }
+
+    /**
      * 비지니스 요구사항에 맞지 않은 경우 발생하는 예외를 핸들링
      */
     @ExceptionHandler(BusinessException.class)
     protected ResponseEntity<ErrorResponse> handleBusinessException(BusinessException e) {
-        log.error("BusinessException", e);
+        log.error("handle BusinessException", e);
 
         return new ResponseEntity<>(
                 ErrorResponse.of(e.getErrorCode()),
