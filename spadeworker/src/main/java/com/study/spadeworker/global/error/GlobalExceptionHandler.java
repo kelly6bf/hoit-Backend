@@ -9,6 +9,8 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
+import javax.persistence.EntityNotFoundException;
+
 import static com.study.spadeworker.global.error.GlobalErrorCode.*;
 
 @RestControllerAdvice
@@ -23,8 +25,20 @@ public class GlobalExceptionHandler {
         log.error("handle MethodArgumentNotValidException", e);
         return new ResponseEntity<>(
                 ErrorResponse.of(INVALID_INPUT_VALUE, e.getBindingResult()),
-                HttpStatus.BAD_REQUEST
+                HttpStatus.valueOf(INVALID_INPUT_VALUE.getStatus())
         );
+    }
+
+    /**
+     * EntityNotFound 예외 핸들링
+     */
+    @ExceptionHandler(EntityNotFoundException.class)
+    protected ResponseEntity<ErrorResponse> handleEntityNotFoundException(EntityNotFoundException e) {
+        log.error("handle EntityNotFoundException", e);
+        return new ResponseEntity<>(
+                ErrorResponse.of(ENTITY_NOT_FOUND, e.getMessage()),
+                HttpStatus.valueOf(ENTITY_NOT_FOUND.getStatus()
+                ));
     }
 
     /**

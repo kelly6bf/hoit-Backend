@@ -29,6 +29,14 @@ public class ErrorResponse {
         this.errors = new ArrayList<>();
     }
 
+    private ErrorResponse(final ErrorCode errorCode, final String message) {
+        this.message = message;
+        this.status = errorCode.getStatus();
+        this.code = errorCode.getCode();
+        this.timestamp = LocalDateTime.now();
+        this.errors = new ArrayList<>();
+    }
+
     private ErrorResponse(final ErrorCode errorCode, final List<FieldError> errors) {
         this.message = errorCode.getMessage();
         this.status = errorCode.getStatus();
@@ -39,6 +47,9 @@ public class ErrorResponse {
 
     public static ErrorResponse of(final ErrorCode errorCode) {
         return new ErrorResponse(errorCode);
+    }
+    public static ErrorResponse of(final ErrorCode errorCode, final String message) {
+        return new ErrorResponse(errorCode, message);
     }
 
     public static ErrorResponse of(final ErrorCode code, final BindingResult bindingResult) {

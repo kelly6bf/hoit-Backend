@@ -12,6 +12,7 @@ public enum GlobalErrorCode implements ErrorCode {
      */
     INVALID_INPUT_VALUE(400, "C-001", "Invalid Input Value"),
     METHOD_NOT_ALLOWED(405, "C-002", "Invalid Http Request Method"),
+    ENTITY_NOT_FOUND(404, "C-003", "Resource Not Found"),
 //    HANDLE_ACCESS_DENIED(403, "C-003", "Access is Denied"),
     INTERNAL_SERVER_ERROR(500, "S-001", "Server Error!");
 
