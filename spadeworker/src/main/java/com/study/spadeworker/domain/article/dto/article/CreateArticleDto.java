@@ -1,5 +1,6 @@
 package com.study.spadeworker.domain.article.dto.article;
 
+import com.study.spadeworker.domain.article.validation.ArticleCategoryValid;
 import lombok.*;
 import org.hibernate.validator.constraints.Length;
 
@@ -24,6 +25,7 @@ public class CreateArticleDto {
         private String content;
 
         @NotBlank(message = "게시글 카테고리는 필수입니다.")
+        @ArticleCategoryValid
         private String articleCategory;
 
         @Size(max = 10, message = "게시글 해시태그는 개수 제한은 10이하 입니다.")
