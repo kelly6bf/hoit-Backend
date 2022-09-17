@@ -6,4 +6,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 public interface ArticleCategoryRepository extends JpaRepository<ArticleCategory, Long> {
 
     ArticleCategory findByTitle(String category);
+
+    boolean existsByTitle(String title);
 }
