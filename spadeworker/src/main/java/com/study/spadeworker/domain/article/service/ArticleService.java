@@ -114,7 +114,6 @@ public class ArticleService {
             Pageable pageable) {
 
         int size = articleRepository.getArticlesByBoard(boardId, articlesViewOptionDto, pageable).getContent().size();
-        System.out.println("몇개 나와요? : " + size);
 
         return articleRepository
                 .getArticlesByBoard(
@@ -126,8 +125,7 @@ public class ArticleService {
 
     // 게시글 Entity 조회 메서드
     @Transactional(readOnly = true)
-    public Article getArticleEntity(Long
-                                            articleId) {
+    public Article getArticleEntity(Long articleId) {
         return articleRepository.findById(articleId)
                 .orElseThrow(() -> new EntityNotFoundException("게시글이 존재하지 않습니다."));
     }
