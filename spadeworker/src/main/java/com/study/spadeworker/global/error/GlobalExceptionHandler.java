@@ -23,7 +23,7 @@ public class GlobalExceptionHandler {
      */
     @ExceptionHandler(MethodArgumentNotValidException.class)
     protected ResponseEntity<ErrorResponse> handleMethodArgumentNotValidException(MethodArgumentNotValidException e) {
-        log.error("handle MethodArgumentNotValidException", e);
+        log.error("handle MethodArgumentNotValidException");
         return new ResponseEntity<>(
                 ErrorResponse.of(INVALID_INPUT_VALUE, e.getBindingResult()),
                 HttpStatus.valueOf(INVALID_INPUT_VALUE.getStatus())
@@ -35,7 +35,7 @@ public class GlobalExceptionHandler {
      */
     @ExceptionHandler(EntityNotFoundException.class)
     protected ResponseEntity<ErrorResponse> handleEntityNotFoundException(EntityNotFoundException e) {
-        log.error("handle EntityNotFoundException", e);
+        log.error("handle EntityNotFoundException");
         return new ResponseEntity<>(
                 ErrorResponse.of(ENTITY_NOT_FOUND, e.getMessage()),
                 HttpStatus.valueOf(ENTITY_NOT_FOUND.getStatus()
@@ -47,7 +47,7 @@ public class GlobalExceptionHandler {
      */
     @ExceptionHandler(BusinessException.class)
     protected ResponseEntity<ErrorResponse> handleBusinessException(BusinessException e) {
-        log.error("handle BusinessException", e);
+        log.error("handle BusinessException");
         return new ResponseEntity<>(
                 ErrorResponse.of(e.getErrorCode()),
                 HttpStatus.valueOf(e.getErrorCode().getStatus())
@@ -59,7 +59,7 @@ public class GlobalExceptionHandler {
      */
     @ExceptionHandler(IllegalArgumentException.class)
     protected ResponseEntity<ErrorResponse> handleIllegalArgumentException(IllegalArgumentException e) {
-        log.error("handle IllegalArgumentException", e);
+        log.error("handle IllegalArgumentException");
         return new ResponseEntity<>(
                 ErrorResponse.of(INVALID_INPUT_VALUE, e.getMessage()),
                 HttpStatus.valueOf(INVALID_INPUT_VALUE.getStatus())
@@ -71,7 +71,7 @@ public class GlobalExceptionHandler {
      */
     @ExceptionHandler(HttpRequestMethodNotSupportedException.class)
     protected ResponseEntity<ErrorResponse> handleHttpRequestMethodNotSupportedException(HttpRequestMethodNotSupportedException e) {
-        log.error("handle HttpRequestMethodNotSupportedException", e);
+        log.error("handle HttpRequestMethodNotSupportedException");
         return new ResponseEntity<>(
                 ErrorResponse.of(METHOD_NOT_ALLOWED),
                 HttpStatus.valueOf(METHOD_NOT_ALLOWED.getStatus())
@@ -83,7 +83,7 @@ public class GlobalExceptionHandler {
      */
     @ExceptionHandler(BindException.class)
     protected ResponseEntity<ErrorResponse> handleBindException(BindException e) {
-        log.error("handle BindException", e);
+        log.error("handle BindException");
         return new ResponseEntity<>(
                 ErrorResponse.of(INVALID_INPUT_VALUE, e.getBindingResult()),
                 HttpStatus.valueOf(INVALID_INPUT_VALUE.getStatus())
@@ -96,7 +96,7 @@ public class GlobalExceptionHandler {
      */
     @ExceptionHandler(Exception.class)
     protected ResponseEntity<ErrorResponse> handleException(Exception e) {
-        log.error("handle Exception", e);
+        log.error("handle Exception");
         return new ResponseEntity<>(
                 ErrorResponse.of(INTERNAL_SERVER_ERROR),
                 HttpStatus.valueOf(INTERNAL_SERVER_ERROR.getStatus())
