@@ -44,7 +44,7 @@ public class ArticleRepositoryCustomImpl extends QuerydslRepositorySupport
                         checkAllHashtag(articlesViewOptionDto.getHashtag())
                 )
                 .distinct()
-                .orderBy(getOrderOption(articlesViewOptionDto.getOrder()))
+                .orderBy(getOrderOption(OrderType.valueOf(articlesViewOptionDto.getOrder().toUpperCase())))
                 .offset(pageable.getOffset())
                 .limit(pageable.getPageSize())
                 .fetch();
