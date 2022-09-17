@@ -129,7 +129,8 @@ public class ArticleCommentService {
         ArticleComment articleComment = getArticleCommentEntity(request.getArticleCommentId());
         articleComment.updateArticleComment(
                 request.getContent(),
-                (request.getRecipientId() != null) ?
+                (request.getRecipientId() != null
+                    && articleComment.getIsChild()) ?
                         userService.getUserEntity(request.getRecipientId()) : null
         );
 

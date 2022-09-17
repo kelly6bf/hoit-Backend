@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
-import static org.springframework.http.HttpStatus.*;
+import static org.springframework.http.HttpStatus.OK;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -101,7 +101,7 @@ public class ArticleController {
     @GetMapping("/board/{boardId}/articles")
     public ListResult<ArticleDto> getArticles(
             @PathVariable final Long boardId,
-            ArticlesViewOptionDto articlesViewOptionDto,
+            @Valid ArticlesViewOptionDto articlesViewOptionDto,
             @PageableDefault(size = 10) Pageable pageable
     ) {
         return responseService.getListResult(

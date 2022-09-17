@@ -1,8 +1,9 @@
 package com.study.spadeworker.domain.article.dto.articleComment;
 
 import lombok.*;
+import org.hibernate.validator.constraints.Length;
 
-import javax.validation.constraints.NotNull;
+import javax.validation.constraints.NotBlank;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class UpdateArticleCommentDto {
@@ -11,7 +12,8 @@ public class UpdateArticleCommentDto {
     @AllArgsConstructor
     @NoArgsConstructor
     public static class Request {
-        @NotNull(message = "댓글 본문은 필수 입니다.")
+        @NotBlank(message = "댓글 본문은 필수입니다.")
+        @Length(min = 1, max = 10000, message = "댓글 본문 길이 제한은 1이상 10000이하 입니다.")
         private String content;
         @Setter
         private Long articleCommentId;
@@ -21,14 +23,11 @@ public class UpdateArticleCommentDto {
 
     @Getter
     @AllArgsConstructor
-    @Builder
     public static class Response {
         private Long articleCommentId;
 
-        public static UpdateArticleCommentDto.Response of(@NonNull Long articleCommentId) {
-            return UpdateArticleCommentDto.Response.builder()
-                    .articleCommentId(articleCommentId)
-                    .build();
+        public static Response of(@NonNull final Long articleCommentId) {
+            return new Response(articleCommentId);
         }
     }
 }

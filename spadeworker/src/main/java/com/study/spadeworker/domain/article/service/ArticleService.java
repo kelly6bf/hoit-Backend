@@ -39,9 +39,6 @@ public class ArticleService {
      */
     public Long createArticle(CreateArticleDto.Request request) {
 
-        // 해시태그 개수 체크
-        checkHashtagCount(request.getHashtagList());
-
         Article savedArticle = articleRepository.saveAndFlush(
                 Article.builder()
                         .title(request.getTitle())
@@ -61,9 +58,6 @@ public class ArticleService {
      * 게시글 수정 비즈니스
      */
     public Long updateArticle(Long articleId, UpdateArticleDto.Request request) {
-
-        // 해시태그 개수 체크
-        checkHashtagCount(request.getHashtagList());
 
         Article article = getArticleEntity(articleId);
         article.update(
@@ -120,7 +114,6 @@ public class ArticleService {
             Pageable pageable) {
 
         int size = articleRepository.getArticlesByBoard(boardId, articlesViewOptionDto, pageable).getContent().size();
-        System.out.println("몇개 나와요? : " + size);
 
         return articleRepository
                 .getArticlesByBoard(
@@ -132,8 +125,7 @@ public class ArticleService {
 
     // 게시글 Entity 조회 메서드
     @Transactional(readOnly = true)
-    public Article getArticleEntity(Long
-                                            articleId) {
+    public Article getArticleEntity(Long articleId) {
         return articleRepository.findById(articleId)
                 .orElseThrow(() -> new EntityNotFoundException("게시글이 존재하지 않습니다."));
     }
@@ -153,14 +145,5 @@ public class ArticleService {
                 userService.getUserAccountDto(article.getUser()),
                 hashtagService.getArticleHashtagList(article)
         );
-    }
-
-    // Hashtag 개수 체크
-    private boolean checkHashtagCount(List<String> hashtagList) {
-        if (hashtagList.size() > 10) {
-            throw new IllegalArgumentException("해시태그 개수가 10개를 초과하였습니다.");
-        }
-
-        return true;
     }
 }
