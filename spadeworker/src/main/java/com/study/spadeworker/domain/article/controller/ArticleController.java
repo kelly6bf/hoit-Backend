@@ -101,7 +101,7 @@ public class ArticleController {
     @GetMapping("/board/{boardId}/articles")
     public ListResult<ArticleDto> getArticles(
             @PathVariable final Long boardId,
-            ArticlesViewOptionDto articlesViewOptionDto,
+            @Valid ArticlesViewOptionDto articlesViewOptionDto,
             @PageableDefault(size = 10) Pageable pageable
     ) {
         return responseService.getListResult(

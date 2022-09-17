@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class ArticlesViewOptionDto {
 
+    @OrderTypeValid
     private final String order;
 
     private final String hashtag;
