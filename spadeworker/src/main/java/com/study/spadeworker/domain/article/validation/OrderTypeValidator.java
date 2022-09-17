@@ -13,10 +13,16 @@ public class OrderTypeValidator implements ConstraintValidator<OrderTypeValid, S
     public boolean isValid(String order, ConstraintValidatorContext context) {
         boolean valid = true;
 
+        if (order == null)
+            return valid;
+
         try {
             OrderType.valueOf(order.toUpperCase());
         } catch (Exception e) {
             valid = false;
+            context.disableDefaultConstraintViolation();
+            context.buildConstraintViolationWithTemplate("잘못된 정렬 옵션입니다.")
+                    .addConstraintViolation();
         }
 
         return valid;
