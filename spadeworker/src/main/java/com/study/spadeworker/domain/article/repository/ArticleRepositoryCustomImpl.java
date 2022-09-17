@@ -45,11 +45,7 @@ public class ArticleRepositoryCustomImpl extends QuerydslRepositorySupport
                 )
                 .distinct()
                 .orderBy(
-                        getOrderOption(
-                                (articlesViewOptionDto.getOrder() != null) ?
-                                OrderType.valueOf(
-                                        (articlesViewOptionDto.getOrder().toUpperCase())) : null
-                        )
+                        getOrderOption(articlesViewOptionDto.getOrderType())
                 )
                 .offset(pageable.getOffset())
                 .limit(pageable.getPageSize())
