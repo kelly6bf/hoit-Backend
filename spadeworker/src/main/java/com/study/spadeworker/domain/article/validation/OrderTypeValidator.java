@@ -1,14 +1,12 @@
 package com.study.spadeworker.domain.article.validation;
 
 import com.study.spadeworker.domain.article.constant.OrderType;
-import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 
 @Component
-@RequiredArgsConstructor
 public class OrderTypeValidator implements ConstraintValidator<OrderTypeValid, String> {
 
     @Override
