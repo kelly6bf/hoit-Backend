@@ -4,6 +4,7 @@ import com.study.spadeworker.global.error.exception.BusinessException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindException;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -47,7 +48,6 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(BusinessException.class)
     protected ResponseEntity<ErrorResponse> handleBusinessException(BusinessException e) {
         log.error("handle BusinessException", e);
-
         return new ResponseEntity<>(
                 ErrorResponse.of(e.getErrorCode()),
                 HttpStatus.valueOf(e.getErrorCode().getStatus())
@@ -60,9 +60,8 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(IllegalArgumentException.class)
     protected ResponseEntity<ErrorResponse> handleIllegalArgumentException(IllegalArgumentException e) {
         log.error("handle IllegalArgumentException", e);
-
         return new ResponseEntity<>(
-                ErrorResponse.of(INVALID_INPUT_VALUE),
+                ErrorResponse.of(INVALID_INPUT_VALUE, e.getMessage()),
                 HttpStatus.valueOf(INVALID_INPUT_VALUE.getStatus())
         );
     }
@@ -73,10 +72,21 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(HttpRequestMethodNotSupportedException.class)
     protected ResponseEntity<ErrorResponse> handleHttpRequestMethodNotSupportedException(HttpRequestMethodNotSupportedException e) {
         log.error("handle HttpRequestMethodNotSupportedException", e);
-
         return new ResponseEntity<>(
                 ErrorResponse.of(METHOD_NOT_ALLOWED),
                 HttpStatus.valueOf(METHOD_NOT_ALLOWED.getStatus())
+        );
+    }
+
+    /**
+     * 잘못된 타입 변환 예외 처리
+     */
+    @ExceptionHandler(BindException.class)
+    protected ResponseEntity<ErrorResponse> handleBindException(BindException e) {
+        log.error("handle BindException", e);
+        return new ResponseEntity<>(
+                ErrorResponse.of(INVALID_INPUT_VALUE, e.getBindingResult()),
+                HttpStatus.valueOf(INVALID_INPUT_VALUE.getStatus())
         );
     }
 
@@ -87,7 +97,6 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(Exception.class)
     protected ResponseEntity<ErrorResponse> handleException(Exception e) {
         log.error("handle Exception", e);
-
         return new ResponseEntity<>(
                 ErrorResponse.of(INTERNAL_SERVER_ERROR),
                 HttpStatus.valueOf(INTERNAL_SERVER_ERROR.getStatus())
