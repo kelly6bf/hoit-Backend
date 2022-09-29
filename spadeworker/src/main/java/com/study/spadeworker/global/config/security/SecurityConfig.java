@@ -120,13 +120,13 @@ public class SecurityConfig {
         return new BCryptPasswordEncoder();
     }
 
-    /*
-     * auth 매니저 설정
-     * */
-    @Bean
-    public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
-        return authenticationConfiguration.getAuthenticationManager();
-    }
+//    /*
+//     * auth 매니저 설정
+//     * */
+//    @Bean
+//    public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
+//        return authenticationConfiguration.getAuthenticationManager();
+//    }
 
     /*
      * 토큰 필터 설정
