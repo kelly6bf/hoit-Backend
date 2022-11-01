@@ -30,7 +30,6 @@ Etc
 * AWS EC2
 * AWS RDS
 * AWS S3
-* Heroku
 * Vue.js 3.x
 
 ## Reference
