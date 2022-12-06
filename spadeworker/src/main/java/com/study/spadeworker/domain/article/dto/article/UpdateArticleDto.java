@@ -19,6 +19,13 @@ public class UpdateArticleDto {
         @Length(min = 1, max = 200, message = "제목 길이 제한은 1이상 200이하 입니다.")
         private String title;
 
+        @NotBlank(message = "한줄 소개는 필수입니다.")
+        @Length(min = 1, max = 100, message = "한줄 소개 길이는 1이상 100이하 입니다.")
+        private String description;
+
+        @NotBlank(message = "썸네일은 필수입니다.")
+        private String thumbnail;
+
         @NotBlank(message = "게시글 본문은 필수입니다.")
         @Length(min = 1, message = "본문 길이 제한은 1이상 입니다.")
         private String content;

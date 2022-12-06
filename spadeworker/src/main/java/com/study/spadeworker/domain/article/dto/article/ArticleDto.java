@@ -10,15 +10,12 @@ import java.util.List;
 @Getter
 public class ArticleDto {
     private Long id;
-
     private String title;
-
+    private String description;
+    private String thumbnail;
     private String content;
-
     private int likesCount;
-
     private int dislikesCount;
-
     private String articleCategory;
     private LocalDateTime createdAt;
     private UserAccountDto user;
@@ -26,6 +23,8 @@ public class ArticleDto {
 
     private ArticleDto(Long articleId,
                        String title,
+                       String description,
+                       String thumbnail,
                        String content,
                        int likesCount,
                        int dislikesCount,
@@ -36,6 +35,8 @@ public class ArticleDto {
     ) {
         this.id = articleId;
         this.title = title;
+        this.description = description;
+        this.thumbnail = thumbnail;
         this.content = content;
         this.likesCount = likesCount;
         this.dislikesCount = dislikesCount;
@@ -53,6 +54,8 @@ public class ArticleDto {
         return new ArticleDto(
                 article.getId(),
                 article.getTitle(),
+                article.getDescription(),
+                article.getThumbnail(),
                 article.getContent(),
                 article.getLikesCount(),
                 article.getDislikesCount(),
