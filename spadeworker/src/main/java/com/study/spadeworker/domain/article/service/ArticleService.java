@@ -19,6 +19,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityNotFoundException;
+import java.util.ArrayList;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -33,7 +34,6 @@ public class ArticleService {
     private final HashtagService hashtagService;
     private final ArticleCommentService articleCommentService;
 
-
     /**
      * 게시글 생성 비즈니스
      */
@@ -42,6 +42,8 @@ public class ArticleService {
         Article savedArticle = articleRepository.saveAndFlush(
                 Article.builder()
                         .title(request.getTitle())
+                        .description(request.getDescription())
+                        .thumbnail(request.getThumbnail())
                         .content(request.getContent())
                         .articleCategory(getArticleCategoryEntity(request.getArticleCategory()))
                         .user(userService.getCurrentUser())
@@ -62,6 +64,8 @@ public class ArticleService {
         Article article = getArticleEntity(articleId);
         article.update(
                 request.getTitle(),
+                request.getDescription(),
+                request.getThumbnail(),
                 request.getContent(),
                 getArticleCategoryEntity(request.getArticleCategory())
         );
@@ -123,6 +127,21 @@ public class ArticleService {
                 ).map(this::convertArticleToArticleDto);
     }
 
+    /**
+     * 모든 게시글을 조회하는 비즈니스 로직
+     */
+    @Transactional(readOnly = true)
+    public List<ArticleDto> getAllArticles(Long boardId) {
+        List<Article> allArticle = articleRepository.findAllByBoard_Id(boardId);
+        List<ArticleDto> allArticleDto = new ArrayList<>();
+
+        for (Article article : allArticle) {
+            allArticleDto.add(convertArticleToArticleDto(article));
+        }
+
+        return allArticleDto;
+    }
+
     // 게시글 Entity 조회 메서드
     @Transactional(readOnly = true)
     public Article getArticleEntity(Long articleId) {
@@ -145,5 +164,16 @@ public class ArticleService {
                 userService.getUserAccountDto(article.getUser()),
                 hashtagService.getArticleHashtagList(article)
         );
+    }
+
+    public List<ArticleDto> getUsersArticles() {
+        List<Article> articles = articleRepository.getArticlesByUser(userService.getCurrentUser());
+        List<ArticleDto> articleDtos = new ArrayList<>();
+
+        for (Article article : articles) {
+            articleDtos.add(convertArticleToArticleDto(article));
+        }
+
+        return articleDtos;
     }
 }

@@ -9,5 +9,4 @@ public class SpadeworkerApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(SpadeworkerApplication.class, args);
 	}
-
 }

@@ -1,10 +1,10 @@
 package com.study.spadeworker.global.config.security;
 
-import com.study.spadeworker.domain.auth.jwt.token.AuthTokenProvider;
-import com.study.spadeworker.domain.auth.jwt.token.UserRefreshTokenRepository;
 import com.study.spadeworker.domain.auth.jwt.filter.CustomAccessDeniedHandler;
 import com.study.spadeworker.domain.auth.jwt.filter.CustomAuthenticationEntryPoint;
 import com.study.spadeworker.domain.auth.jwt.filter.TokenAuthenticationFilter;
+import com.study.spadeworker.domain.auth.jwt.token.AuthTokenProvider;
+import com.study.spadeworker.domain.auth.jwt.token.UserRefreshTokenRepository;
 import com.study.spadeworker.domain.auth.oauth.handler.OAuth2AuthenticationFailureHandler;
 import com.study.spadeworker.domain.auth.oauth.handler.OAuth2AuthenticationSuccessHandler;
 import com.study.spadeworker.domain.auth.oauth.repository.OAuth2AuthorizationRequestBasedOnCookieRepository;
@@ -15,19 +15,13 @@ import com.study.spadeworker.global.config.properties.CorsProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsUtils;
-import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
-
-import java.util.Arrays;
 
 @Configuration
 public class SecurityConfig {
@@ -75,14 +69,18 @@ public class SecurityConfig {
                 // 401, 403 예외 핸들러를 우리가 제작한 핸들러로 넣어줌
                 .accessDeniedHandler(customAccessDeniedHandler);
 
-        // 권한별 요청 설정
+//         권한별 요청 설정
         http.authorizeRequests()
+                .mvcMatchers(HttpMethod.OPTIONS, "/**").permitAll()
                 .requestMatchers(CorsUtils::isPreFlightRequest).permitAll()
+                .antMatchers(HttpMethod.GET, "/").permitAll()
+                .antMatchers(HttpMethod.GET, "/index").permitAll()
                 .antMatchers(HttpMethod.GET, "/api/board/**").permitAll()
                 .antMatchers(HttpMethod.GET, "/api/article/**").permitAll()
                 .antMatchers(HttpMethod.GET, "/api/auth/refresh").permitAll()
-//                .antMatchers("/api/admin/**").hasAnyAuthority(RoleType.ADMIN.getCode())
-                // 나머지는 모두 인증 필요
+                .antMatchers(HttpMethod.GET, "/api/popular-articles").permitAll()
+                .antMatchers("/api/admin/**").hasAnyAuthority(RoleType.ADMIN.getCode())
+//                 나머지는 모두 인증 필요
                 .anyRequest().authenticated();
 
         // front 에서 login 시 요청할 url
@@ -108,7 +106,6 @@ public class SecurityConfig {
 
 //         login 한 사용자 검증 필터 설정
         http.addFilterBefore(tokenAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
-
         return http.build();
     }
 
@@ -166,22 +163,22 @@ public class SecurityConfig {
         return new OAuth2AuthenticationFailureHandler(oAuth2AuthorizationRequestBasedOnCookieRepository());
     }
 
-    /*
-     * Cors 설정
-     * */
-    @Bean
-    public UrlBasedCorsConfigurationSource corsConfigurationSource() {
-        UrlBasedCorsConfigurationSource corsConfigSource = new UrlBasedCorsConfigurationSource();
-
-        CorsConfiguration corsConfig = new CorsConfiguration();
-        corsConfig.setAllowedHeaders(Arrays.asList(corsProperties.getAllowedHeaders().split(",")));
-        corsConfig.setAllowedMethods(Arrays.asList(corsProperties.getAllowedMethods().split(",")));
-        corsConfig.setAllowedOrigins(Arrays.asList(corsProperties.getAllowedOrigins().split(",")));
-        corsConfig.setAllowCredentials(true);
-        corsConfig.setMaxAge(corsConfig.getMaxAge());
-
-        corsConfigSource.registerCorsConfiguration("/**", corsConfig);
-        return corsConfigSource;
-    }
+//    /*
+//     * Cors 설정
+//     * */
+//    @Bean
+//    public UrlBasedCorsConfigurationSource corsConfigurationSource() {
+//        UrlBasedCorsConfigurationSource corsConfigSource = new UrlBasedCorsConfigurationSource();
+//
+//        CorsConfiguration corsConfig = new CorsConfiguration();
+//        corsConfig.setAllowedHeaders(Arrays.asList(corsProperties.getAllowedHeaders().split(",")));
+//        corsConfig.setAllowedMethods(Arrays.asList(corsProperties.getAllowedMethods().split(",")));
+//        corsConfig.setAllowedOrigins(Arrays.asList(corsProperties.getAllowedOrigins().split(",")));
+//        corsConfig.setAllowCredentials(true);
+//        corsConfig.setMaxAge(corsConfig.getMaxAge());
+//
+//        corsConfigSource.registerCorsConfiguration("/**", corsConfig);
+//        return corsConfigSource;
+//    }
 
 }

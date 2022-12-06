@@ -7,6 +7,7 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.springframework.context.annotation.Configuration;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -28,6 +29,12 @@ public class Article extends BaseEntity {
 
     @Column(nullable = false, length = 200)
     private String title;
+
+    @Column(nullable = false, length = 100)
+    private String description;
+
+    @Column(nullable = false, length = 3000)
+    private String thumbnail;
 
     @Column(nullable = false, columnDefinition = "TEXT")
     private String content;
@@ -51,8 +58,10 @@ public class Article extends BaseEntity {
     private Board board;
 
     @Builder
-    public Article(String title, String content, User user, Board board, ArticleCategory articleCategory) {
+    public Article(String title, String description, String thumbnail, String content, User user, Board board, ArticleCategory articleCategory) {
         this.title = title;
+        this.description = description;
+        this.thumbnail = thumbnail;
         this.content = content;
         this.likesCount = 0;
         this.dislikesCount = 0;
@@ -64,8 +73,10 @@ public class Article extends BaseEntity {
     /**
      * 게시물 수정
      */
-    public void update(String title, String content, ArticleCategory category) {
+    public void update(String title, String description, String thumbnail, String content, ArticleCategory category) {
         this.title = title;
+        this.description = description;
+        this.thumbnail = thumbnail;
         this.content = content;
         this.articleCategory = category;
     }

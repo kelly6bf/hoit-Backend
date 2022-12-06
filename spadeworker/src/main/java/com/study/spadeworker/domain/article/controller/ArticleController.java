@@ -6,6 +6,7 @@ import com.study.spadeworker.domain.article.dto.article.ArticlesViewOptionDto;
 import com.study.spadeworker.domain.article.dto.article.CreateArticleDto;
 import com.study.spadeworker.domain.article.dto.article.UpdateArticleDto;
 import com.study.spadeworker.domain.article.service.ArticleService;
+import com.study.spadeworker.domain.article.service.HashtagService;
 import com.study.spadeworker.global.response.CommonResult;
 import com.study.spadeworker.global.response.ListResult;
 import com.study.spadeworker.global.response.ResponseService;
@@ -18,6 +19,8 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
+import java.util.List;
+
 import static org.springframework.http.HttpStatus.OK;
 
 @Slf4j
@@ -28,6 +31,7 @@ public class ArticleController {
 
     private final ResponseService responseService;
     private final ArticleService articleService;
+    private final HashtagService hashtagService;
 
     /**
      * 게시물 생성 API
@@ -80,6 +84,20 @@ public class ArticleController {
     }
 
     /**
+     * 게시글 전체 조회 API
+     */
+    @GetMapping("/board/{boardId}/all-articles")
+    public ListResult<ArticleDto> getAllArticles(
+            @PathVariable final Long boardId
+    ) {
+        return responseService.getListResult(
+                OK.value(),
+                "성공적으로 게시글이 조회되었습니다.",
+                articleService.getAllArticles(boardId)
+        );
+    }
+
+    /**
      * 게시글 단건 및 게시글 댓글 리스트 조회 API
      */
     @GetMapping("/article/{articleId}")
@@ -112,6 +130,31 @@ public class ArticleController {
                         articlesViewOptionDto,
                         pageable
                 ).getContent()
+        );
+    }
+
+    /**
+     * 인기 해시태그 상위 10개를 조회하는 API
+     */
+    @GetMapping("/popular-articles")
+    public SingleResult<List<String>> getPopularHashtags() {
+
+        return responseService.getSingleResult(
+                OK.value(),
+                "성공적으로 조회하였습니다.",
+                hashtagService.getPopularHashtags()
+        );
+    }
+
+    /**
+     * 특정 사용자의 게시글을 모두 조회하는 API
+     */
+    @GetMapping("/article/users-articles")
+    public ListResult<ArticleDto> getUsersArticles() {
+        return responseService.getListResult(
+                OK.value(),
+                "성공적으로 조회하였습니다.",
+                articleService.getUsersArticles()
         );
     }
 }
