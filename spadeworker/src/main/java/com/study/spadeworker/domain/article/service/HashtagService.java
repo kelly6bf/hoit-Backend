@@ -5,7 +5,9 @@ import com.study.spadeworker.domain.article.entity.ArticleHashtag;
 import com.study.spadeworker.domain.article.entity.Hashtag;
 import com.study.spadeworker.domain.article.repository.ArticleHashtagRepository;
 import com.study.spadeworker.domain.article.repository.HashtagRepository;
+import com.study.spadeworker.domain.article.repository.HashtagRepositoryCustom;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -60,5 +62,16 @@ public class HashtagService {
         }
 
         return hashtagTitleList;
+    }
+
+    public List<String> getPopularHashtags() {
+        List<Hashtag> popularHashtags = hashtagRepository.getPopularHashtags();
+        List<String> popularHashtagTitles = new ArrayList<>();
+
+        for (Hashtag hashtag : popularHashtags) {
+            popularHashtagTitles.add(hashtag.getTitle());
+        }
+
+        return popularHashtagTitles;
     }
 }
