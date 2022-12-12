@@ -19,6 +19,7 @@ Spring Boot
 * Spring Security
 * OAuth2-Client
 * JUnit5
+* AssertJ
 * Validation
 * Lombok
 * H2 Database
@@ -27,10 +28,8 @@ Spring Boot
 Etc
 
 * QueryDSL 5.0.0
-* AWS EC2
+* Google Cloud Platform Computing Service
 * AWS RDS
-* AWS S3
-* Vue.js 3.x
 
 ## Reference
 
