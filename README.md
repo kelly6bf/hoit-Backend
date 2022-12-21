@@ -1,6 +1,7 @@
 # hoit Backend
 
 > BUFS 컴퓨터 공학과의 공식 플랫폼(?) hoit의 Backend Code입니다.
+> 향후 기능 추가 및 유지보수 예정입니다.
 
 ## 개발 환경
 
@@ -18,7 +19,6 @@ Spring Boot
 * Spring Data JPA
 * Spring Security
 * OAuth2-Client
-* JUnit5
 * AssertJ
 * Validation
 * Lombok
